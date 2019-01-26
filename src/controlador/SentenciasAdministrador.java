@@ -16,11 +16,42 @@ public class SentenciasAdministrador {
     private ResultSet resultado = null;
     private PreparedStatement psentencia = null;
 
+    private int id;
+    private String cedula, nombre, apellido, rol, password, respuesta, pregunta;
+
     private ModeloEmpleado modeloEmpleado;
 
+    public List<ModeloEmpleado> recuperarPass(ConexionAdministrador con){
+        List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
+
+        try{
+            psentencia = con.getConnection().prepareStatement("Select * from age_empleados");
+            resultado = psentencia.executeQuery();
+
+            while(resultado.next()){
+                modeloEmpleado = new ModeloEmpleado();
+
+                cedula = resultado.getString("emp_cedula");
+                pregunta = resultado.getString("emp_pregunta");
+                respuesta = resultado.getString("emp_resp_seguridad");
+                password = resultado.getString("emp_contrasena");
+
+                modeloEmpleado.setCedula(cedula);
+                modeloEmpleado.setPregunta(pregunta);
+                modeloEmpleado.setRespuesta(respuesta);
+                modeloEmpleado.setPassword(password);
+
+                modeloEmpleadoList.add(modeloEmpleado);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return modeloEmpleadoList;
+    }
+
     public List<ModeloEmpleado> obtenerEmpleados(ConexionAdministrador con){
-        int id;
-        String cedula, nombre, apellido, rol, password, respuesta, pregunta;
+
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
 
         try{

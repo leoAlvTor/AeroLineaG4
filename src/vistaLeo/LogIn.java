@@ -101,24 +101,20 @@ public class LogIn extends JFrame implements ActionListener {
         btnLog = new JButton("Log In");
         btnLog.setActionCommand("login");
         btnLog.addActionListener(this);
+
         btnCancelar = new JButton("Cancelar");
         btnSalir = new JButton("Salir");
         btnRegistrar = new JButton("Registrarse");
-        btnRecuperar = new JButton("Recuperar contrasena");
 
+        btnRecuperar = new JButton("Recuperar password");
+        btnRecuperar.setActionCommand("recuperar");
+        btnRecuperar.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
 
         if(e.getActionCommand().equals("login")){
-            /*
-            MenuAdministrador menuAdministrador = new MenuAdministrador();
-            menuAdministrador.setSize(400,400);
-            menuAdministrador.ejecutar();
-            */
-
             GestionAeroLinea gestionAeroLinea= new GestionAeroLinea();
             List<ModeloEmpleado> modeloEmpleados = new ArrayList<>();
             modeloEmpleados = gestionAeroLinea.obtenerEmpleados();
@@ -144,10 +140,19 @@ public class LogIn extends JFrame implements ActionListener {
             }
 
             if(bandera == true){
-                if(banderaRol == true)
+                if(banderaRol == true) {
                     System.out.println("Agente");
-                else if(banderaRol == false)
+                    MenuAgente menu = new MenuAgente();
+                    menu.setSize(500,500);
+                    menu.ejectuar();
+                    this.setVisible(false);
+                }else if(banderaRol == false) {
                     System.out.println("Administrador");
+                    MenuAdministrador menuAdministrador = new MenuAdministrador();
+                    menuAdministrador.setSize(400,400);
+                    menuAdministrador.ejecutar();
+                    this.setVisible(false);
+                }
             }else {
                 Object[] options = {"Aceptar"};
                 int n = JOptionPane.showOptionDialog(this,
@@ -161,6 +166,18 @@ public class LogIn extends JFrame implements ActionListener {
                 txtPass.setText("");
                 txtCedula.requestFocus();
             }
+        }
+
+        String accion = e.getActionCommand();
+        switch (accion) {
+            case "recuperar":
+                System.out.println("recuperar...");
+                setVisible(false);
+                RecuperarPass recuperarPass = new RecuperarPass();
+
+                break;
+                default:
+                    break;
         }
     }
 }

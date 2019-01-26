@@ -15,24 +15,6 @@ public class GestionAeroLinea {
     private SentenciasAgente sentenciasAgente;
     private SentenciasAdministrador sentenciasAdministrador;
 
-    public List<ModeloPreFactura> obtenerTodosVuelos() {
-        List<ModeloPreFactura> preFacturaList = new ArrayList<>();
-         conexionAgente = new ConexionAgente();
-
-        conexionAgente.Conectar();
-
-        if (conexionAgente.getConnection() != null)
-            System.out.println("Se ha conectado correctamente");
-        else
-            System.out.println("Se ha interrumpido la conexion");
-
-        SentenciasAgente sentenciasAgente = new SentenciasAgente();
-        preFacturaList = sentenciasAgente.obtenerTodosVuelos(conexionAgente);
-        conexionAgente.Desconectar();
-        return preFacturaList;
-    }
-
-
     /*
     |
     |
@@ -57,6 +39,46 @@ public class GestionAeroLinea {
 
 
         return modeloEmpleadoList;
+    }
+
+    public List<String> recuperarPassword(String cedula, String pregunta, String respuesta){
+        List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
+        List<String> datos = new ArrayList<>();
+
+        conexionAdministrador = new ConexionAdministrador();
+        conexionAdministrador.Conectar();
+        sentenciasAdministrador = new SentenciasAdministrador();
+
+        String retCedula = "";
+        String retPassword = "";
+
+        if(conexionAdministrador.getConnection() != null){
+            System.out.println("Conexion administrador correcta...");
+            modeloEmpleadoList = sentenciasAdministrador.recuperarPass(conexionAdministrador);
+        }else{
+            System.out.println("La conexion no se ha realizado correctamente");
+        }
+        conexionAdministrador.Desconectar();
+
+        System.out.println(cedula + "<<" + pregunta + "<<"+ respuesta+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        for (int i = 0; i < modeloEmpleadoList.size(); i++) {
+            String password1 = modeloEmpleadoList.get(i).getPassword();
+            String cedula1 = modeloEmpleadoList.get(i).getCedula();
+            String pregunta1 = modeloEmpleadoList.get(i).getPregunta();
+            String respuesta1 = modeloEmpleadoList.get(i).getRespuesta();
+
+            if(cedula1.equals(cedula) && pregunta1.equals(pregunta) && respuesta1.equals(respuesta)) {
+                retPassword = password1;
+                retCedula = cedula1;
+                break;
+            }
+        }
+
+        datos.add(retCedula);
+        datos.add(retPassword);
+
+        return datos;
     }
 
 }
