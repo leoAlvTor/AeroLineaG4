@@ -1,5 +1,7 @@
 package vistaLeo;
 
+import controlador.GestionAeroLinea;
+
 import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,11 +10,16 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] leo){
-        /*
+
         System.out.println();
         LogIn logIn = new LogIn();
         logIn.init();
+        logIn.setSize(300,350);
+        logIn.setLocation(870,270);
 
+        GestionAeroLinea gestionAeroLinea= new GestionAeroLinea();
+        gestionAeroLinea.obtenerTodosVuelos();
+/*
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         logIn.setLocation(dimension.width/2-logIn.getSize().width/2, dimension.height/2-logIn.getSize().height/2);
 
@@ -23,7 +30,7 @@ public class Main {
         menu.setSize(500,500);
         menu.ejectuar();
 */
-        PreFactura preFactura = new PreFactura();
+       // PreFactura preFactura = new PreFactura();
 
 
         //VuelosVendidos vuelosVendidos = new VuelosVendidos();

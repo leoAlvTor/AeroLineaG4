@@ -1,5 +1,6 @@
 package controlador;
 
+import modelo.ModeloEmpleado;
 import modelo.ModeloPreFactura;
 
 import java.util.ArrayList;
@@ -8,14 +9,13 @@ import java.util.List;
 public class GestionAeroLinea {
     public GestionAeroLinea(){}
 
+    private ConexionAgente conexionAgente;
+    private ConexionAdministrador conexionAdministrador;
 
     public List<ModeloPreFactura> obtenerTodosVuelos() {
         List<ModeloPreFactura> preFacturaList = new ArrayList<>();
+         conexionAgente = new ConexionAgente();
 
-        ConexionAgente conexionAgente = new ConexionAgente();
-        conexionAgente.setUrl("jdbc:oracle:thin:@192.168.56.101:1521:xe");
-        conexionAgente.setUsuario("system");
-        conexionAgente.setPassword("leo");
         conexionAgente.Conectar();
 
         if (conexionAgente.getConnection() != null)
@@ -25,8 +25,14 @@ public class GestionAeroLinea {
 
         SentenciasAgente sentenciasAgente = new SentenciasAgente();
         preFacturaList = sentenciasAgente.obtenerTodosVuelos(conexionAgente);
-
+        conexionAgente.Desconectar();
         return preFacturaList;
+    }
+
+    public List<ModeloEmpleado> obtenerEmpleados(){
+        List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
+        conexionAgente = new ConexionAgente();
+        conexionAgente.
 
     }
 

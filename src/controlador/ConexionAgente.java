@@ -6,12 +6,16 @@ import java.sql.SQLException;
 
 public class ConexionAgente {
 
-    private String usuario, password, url;
+    private String usuario = "leo_proyecto";
+    private String password = "leo";
+    private String url = "jdbc:oracle:thin:@192.168.56.101:1521:xe";
+
+
     private Connection connection = null;
 
     public void Conectar(){
         try{
-            this.setConnection(DriverManager.getConnection(this.getUrl(),this.getUsuario(),this.getPassword()));
+            this.setConnection(DriverManager.getConnection(url, usuario, password));
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -26,30 +30,6 @@ public class ConexionAgente {
         }
     }
 
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public Connection getConnection() {
         return connection;
     }
@@ -57,5 +37,4 @@ public class ConexionAgente {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-
 }
