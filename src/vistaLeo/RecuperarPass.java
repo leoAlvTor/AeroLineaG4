@@ -23,7 +23,7 @@ public class RecuperarPass extends JFrame implements ActionListener{
     private JTextField camPregunta;
     private JTextField camRespuesta;
 
-    private JButton bntconsultar;
+    private JButton bntconsultar, btnSalir;
 
     private JComboBox comboPreguntas;
 
@@ -43,6 +43,10 @@ public class RecuperarPass extends JFrame implements ActionListener{
         bntconsultar=new JButton("Consultar");
         bntconsultar.setActionCommand("bntconsultar");
         bntconsultar.addActionListener(this);
+
+        btnSalir = new JButton("Salir");
+        btnSalir.setActionCommand("salir");
+        btnSalir.addActionListener(this);
         ///
 
         initComponentes();
@@ -81,6 +85,7 @@ public class RecuperarPass extends JFrame implements ActionListener{
         pDos.add(camCedula);
         pDos.add(comboPreguntas);
         pDos.add(camRespuesta);
+        pDos.add(btnSalir);
 
 
         pInter.add(pUno);
@@ -132,6 +137,13 @@ public class RecuperarPass extends JFrame implements ActionListener{
                 }
 
                 break;
+
+            case "salir":
+                this.setVisible(false);
+                LogIn logIn = new LogIn();
+                logIn.init();
+                logIn.setSize(300,350);
+                logIn.setLocation(870,270);
 
             default:
                 break;

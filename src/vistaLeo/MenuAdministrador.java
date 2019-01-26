@@ -7,12 +7,13 @@ import java.awt.event.MouseListener;
 
 
 public class MenuAdministrador extends JFrame implements MouseListener {
-    private JLabel lblBuscar, lblActualizar, lblEliminar, lblSalir;
-    private JLabel txtBuscar, txtActualizar, txtEliminar, txtSalir;
+    private JLabel lblBuscar, lblActualizar, lblEliminar, lblSalir, lblRegistrar;
+    private JLabel txtBuscar, txtActualizar, txtEliminar, txtSalir, txtRegistrar;
 
     public void ejecutar(){
         componentes();
         init();
+        repaint();
     }
 
     public void init(){
@@ -30,10 +31,10 @@ public class MenuAdministrador extends JFrame implements MouseListener {
         add(txtBuscar);
 
         lblActualizar.setSize(lblBuscar.getSize());
-        lblActualizar.setLocation(220, 30);
+        lblActualizar.setLocation(370, 30);
         add(lblActualizar);
 
-        txtActualizar.setLocation(210, 140);
+        txtActualizar.setLocation(360, 140);
         txtActualizar.setSize(txtActualizar.getPreferredSize());
         add(txtActualizar);
 
@@ -46,17 +47,27 @@ public class MenuAdministrador extends JFrame implements MouseListener {
         add(txtEliminar);
 
         lblSalir.setSize(lblBuscar.getSize());
-        lblSalir.setLocation(220, 190);
+        lblSalir.setLocation(370, 190);
         add(lblSalir);
 
         txtSalir.setSize(txtSalir.getPreferredSize());
-        txtSalir.setLocation(245,295);
+        txtSalir.setLocation(395,295);
         add(txtSalir);
 
+        lblRegistrar.setSize(lblBuscar.getPreferredSize());
+        lblRegistrar.setLocation(220, 250);
+        add(lblRegistrar);
+
+        txtRegistrar.setSize(txtRegistrar.getPreferredSize());
+        txtRegistrar.setLocation(210, 345);
+        add(txtRegistrar);
 
     }
 
     public void componentes(){
+        lblRegistrar = new JLabel();
+        lblRegistrar.setIcon(new ImageIcon(this.getClass().getResource("Imagenes/registrar.png")));
+        lblRegistrar.addMouseListener(this);
 
         lblBuscar = new JLabel();
         lblBuscar.setIcon(new ImageIcon(this.getClass().getResource("Imagenes/Buscar.png")));
@@ -74,6 +85,9 @@ public class MenuAdministrador extends JFrame implements MouseListener {
         lblSalir.setIcon(new ImageIcon(this.getClass().getResource("Imagenes/Salir.png")));
         lblSalir.addMouseListener(this);
 
+        txtRegistrar = new JLabel("Registrar usuario");
+        txtRegistrar.setToolTipText("Registrar un nuevo empleado");
+
         txtActualizar = new JLabel("Actualizar vuelos");
         txtActualizar.setToolTipText("Actualizar los datos de un vuelo");
 
@@ -85,6 +99,11 @@ public class MenuAdministrador extends JFrame implements MouseListener {
 
         txtSalir = new JLabel("Salir");
         txtSalir.setToolTipText("Regresar a la ventana de LogIn");
+    }
+
+    public void llamarRegistro(){
+        setVisible(false);
+        CrearCuenta  crearCuenta = new CrearCuenta();
     }
 
     @Override
@@ -99,6 +118,8 @@ public class MenuAdministrador extends JFrame implements MouseListener {
             System.out.println("Eliminar");
         else if(label == lblSalir)
             System.out.println("Salir");
+        else if(label == lblRegistrar)
+            llamarRegistro();
     }
 
     @Override

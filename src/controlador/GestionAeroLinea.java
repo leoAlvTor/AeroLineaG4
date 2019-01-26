@@ -2,6 +2,7 @@ package controlador;
 
 import modelo.ModeloEmpleado;
 import modelo.ModeloPreFactura;
+import vistaLeo.CrearCuenta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,24 @@ public class GestionAeroLinea {
     |
     |
      */
+
+    public void crearUsuario(String pCedula, String pNombre, String pApellido,
+                             String pPassword, String pPregunta, String pRespuesta, String pRol){
+
+        conexionAdministrador = new ConexionAdministrador();
+        conexionAdministrador.Conectar();
+
+        if(conexionAdministrador.getConnection()!= null){
+            System.out.println("Conexion administrador correcta");
+            sentenciasAdministrador = new SentenciasAdministrador();
+            sentenciasAdministrador.crearUsuario(conexionAdministrador, pCedula, pNombre, pApellido, pPassword,
+                    pPregunta, pRespuesta, pRol);
+        }else{
+            System.out.println("Conexion amdinistrador incorrecta");
+        }
+        conexionAdministrador.Desconectar();
+
+    }
 
     public List<ModeloEmpleado> obtenerEmpleados(){
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();

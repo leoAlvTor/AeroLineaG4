@@ -17,7 +17,7 @@ public class LogIn extends JFrame implements ActionListener {
     private JPanel pnlP;
     private JPanel pnlS1, pnlS2, pnlS3, pnlS3_1, pnlS3_2;
     private JTextField txtCedula, txtPass;
-    private JButton btnLog, btnCancelar, btnSalir, btnRegistrar, btnRecuperar;
+    private JButton btnLog, btnCancelar, btnSalir, btnRecuperar;
 
     // Labels
     JLabel lblTitulo, lblCedula, lblPass;
@@ -26,6 +26,9 @@ public class LogIn extends JFrame implements ActionListener {
         init();
         pack();
     }
+
+    public LogIn(){}
+
 
     public void init(){
         setTitle("leo In");
@@ -56,18 +59,18 @@ public class LogIn extends JFrame implements ActionListener {
 
         btnLog.setSize(100,30);
         btnCancelar.setSize(130, 30);
-        btnSalir.setSize(100, 30);
-        btnRegistrar.setSize(130, 30);
+        btnSalir.setSize(250, 30);
         btnRecuperar.setSize(250,30);
 
         btnLog.setLocation(20,158);
         add(btnLog);
+
         btnCancelar.setLocation(140, 158);
         add(btnCancelar);
+
         btnSalir.setLocation(20,200);
         add(btnSalir);
-        btnRegistrar.setLocation(140,200);
-        add(btnRegistrar);
+
         btnRecuperar.setLocation(20, 243);
         add(btnRecuperar);
 
@@ -103,13 +106,18 @@ public class LogIn extends JFrame implements ActionListener {
         btnLog.addActionListener(this);
 
         btnCancelar = new JButton("Cancelar");
+        btnCancelar.setActionCommand("cancelar");
+        btnCancelar.addActionListener(this);
+
         btnSalir = new JButton("Salir");
-        btnRegistrar = new JButton("Registrarse");
+        btnSalir.setActionCommand("salir");
+        btnSalir.addActionListener(this);
 
         btnRecuperar = new JButton("Recuperar password");
         btnRecuperar.setActionCommand("recuperar");
         btnRecuperar.addActionListener(this);
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -149,7 +157,7 @@ public class LogIn extends JFrame implements ActionListener {
                 }else if(banderaRol == false) {
                     System.out.println("Administrador");
                     MenuAdministrador menuAdministrador = new MenuAdministrador();
-                    menuAdministrador.setSize(400,400);
+                    menuAdministrador.setSize(600,500);
                     menuAdministrador.ejecutar();
                     this.setVisible(false);
                 }
@@ -176,6 +184,19 @@ public class LogIn extends JFrame implements ActionListener {
                 RecuperarPass recuperarPass = new RecuperarPass();
 
                 break;
+
+            case "cancelar":
+                System.out.println("Cancelar");
+                txtCedula.setText("");
+                txtPass.setText("");
+                txtCedula.requestFocus();
+                break;
+
+            case "salir":
+                System.exit(0);
+                break;
+
+
                 default:
                     break;
         }

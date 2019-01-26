@@ -21,6 +21,31 @@ public class SentenciasAdministrador {
 
     private ModeloEmpleado modeloEmpleado;
 
+    public void crearUsuario(ConexionAdministrador con, String pCedula, String pNombre, String pApellido,
+                             String pPassword, String pPregunta, String pRespuesta, String pRol){
+
+        try{
+            String sentencia = "Insert into age_empleados values"
+                    + "(age_empleados_seq.nextval, ?,?,?,?,?,?,?)";
+
+            psentencia = con.getConnection().prepareStatement(sentencia);
+
+            psentencia.setString(1, pCedula);
+            psentencia.setString(2, pNombre);
+            psentencia.setString(3, pApellido);
+            psentencia.setString(4, pRol);
+            psentencia.setString(5, pPassword);
+            psentencia.setString(6, pRespuesta);
+            psentencia.setString(7, pPregunta);
+
+            psentencia.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
     public List<ModeloEmpleado> recuperarPass(ConexionAdministrador con){
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
 
