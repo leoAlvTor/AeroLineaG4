@@ -1,6 +1,7 @@
 package controlador;
 
 import modelo.ModeloEmpleado;
+import modelo.ModeloVuelos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,26 @@ public class GestionAeroLinea {
     |
     |
      */
+
+
+
+    public List<ModeloVuelos> listarVuelosPorDestino(String destino) {
+        conexionAdministrador = new ConexionAdministrador();
+        conexionAdministrador.Conectar();
+
+        List<ModeloVuelos> modeloVuelosList = new ArrayList<>();
+
+        if (conexionAdministrador.getConnection() != null) {
+            System.out.println("Conexion administrador correcta");
+            sentenciasAdministrador = new SentenciasAdministrador();
+            modeloVuelosList = sentenciasAdministrador.listarVuelosPorDestino(conexionAdministrador, destino);
+
+        } else
+            System.out.println("Conexion administrador incorrecta");
+        conexionAdministrador.Desconectar();
+
+        return modeloVuelosList;
+    }
 
     public void crearUsuario(String pCedula, String pNombre, String pApellido,
                              String pPassword, String pPregunta, String pRespuesta, String pRol){
@@ -56,6 +77,27 @@ public class GestionAeroLinea {
 
 
         return modeloEmpleadoList;
+    }
+
+    public List<String> destinos(){
+
+        List<String> datos = new ArrayList<>();
+
+        conexionAdministrador = new ConexionAdministrador();
+        conexionAdministrador.Conectar();
+        sentenciasAdministrador = new SentenciasAdministrador();
+
+
+        if(conexionAdministrador.getConnection() != null){
+            System.out.println("Conexion administrador correcta...");
+            datos = sentenciasAdministrador.listarDestinos(conexionAdministrador);
+        }else{
+            System.out.println("La conexion no se ha realizado correctamente");
+        }
+        conexionAdministrador.Desconectar();
+
+
+        return datos;
     }
 
     public List<String> recuperarPassword(String cedula, String pregunta, String respuesta){

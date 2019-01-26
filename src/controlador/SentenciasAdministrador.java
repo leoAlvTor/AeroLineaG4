@@ -1,6 +1,7 @@
 package controlador;
 
 import modelo.ModeloEmpleado;
+import modelo.ModeloVuelos;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +20,49 @@ public class SentenciasAdministrador {
     private String cedula, nombre, apellido, rol, password, respuesta, pregunta;
 
     private ModeloEmpleado modeloEmpleado;
+
+
+
+    public List<ModeloVuelos> listarVuelosPorDestino(ConexionAdministrador con, String destino){
+        List<ModeloVuelos> modeloVuelosList = new ArrayList<>();
+        ModeloVuelos modeloVuelos = new ModeloVuelos();
+
+        try{
+            String sentencia = "select * from age_vuelos," +
+                    "(select are_id" +
+                    "from age_areopuertos" +
+                    "where are_direccion = ?), leo" +
+                    "where age_vuelos.age_areopuertos_are_id1 = leo.are_id";
+
+            psentencia = con.getConnection().prepareStatement(sentencia);
+
+            psentencia.setString(1, destino);
+
+            resultado = psentencia.executeQuery();
+
+            while(resultado.next()){
+                modeloVuelos = new ModeloVuelos();
+
+                modeloVuelos.setId(resultado.getString("vue_id"));
+                modeloVuelos.setCapacidad(resultado.getString("vue_capacidad"));
+                modeloVuelos.setSalida(resultado.getString("vue_hora_salida"));
+                modeloVuelos.setLlegada(resultado.getString("vue_hora_llegada"));
+                modeloVuelos.setTipo(resultado.getString("vue_tip_vuelo"));
+                modeloVuelos.setCosto(resultado.getString("vue_costo"));
+                modeloVuelos.setAeropuertoSalida(resultado.getString("age_areopuertos_are_id"));
+                modeloVuelos.setAeropuertoLlegada(resultado.getString("age_areopuertos_are_id1"));
+                modeloVuelos.setAvion(resultado.getString("age_avion_avi_id"));
+
+                modeloVuelosList.add(modeloVuelos);
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return modeloVuelosList;
+    }
+
 
     public void crearUsuario(ConexionAdministrador con, String pCedula, String pNombre, String pApellido,
                              String pPassword, String pPregunta, String pRespuesta, String pRol){
@@ -43,6 +87,23 @@ public class SentenciasAdministrador {
             e.printStackTrace();
         }
 
+    }
+
+    public List<String> listarDestinos(ConexionAdministrador con){
+        List<String> datos = new ArrayList<>();
+
+        try{
+            psentencia = con.getConnection().prepareStatement("Select * from age_areopuertos");
+            resultado = psentencia.executeQuery();
+
+            while(resultado.next()){
+                datos.add(resultado.getString("are_direccion"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return datos;
     }
 
     public List<ModeloEmpleado> recuperarPass(ConexionAdministrador con){
