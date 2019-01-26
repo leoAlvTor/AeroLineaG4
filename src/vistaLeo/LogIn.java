@@ -1,9 +1,16 @@
 package vistaLeo;
 
+import controlador.GestionAeroLinea;
+import modelo.ModeloEmpleado;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class LogIn extends JFrame implements ActionListener {
@@ -106,9 +113,54 @@ public class LogIn extends JFrame implements ActionListener {
         System.out.println(e.getActionCommand());
 
         if(e.getActionCommand().equals("login")){
+            /*
             MenuAdministrador menuAdministrador = new MenuAdministrador();
             menuAdministrador.setSize(400,400);
             menuAdministrador.ejecutar();
+            */
+
+            GestionAeroLinea gestionAeroLinea= new GestionAeroLinea();
+            List<ModeloEmpleado> modeloEmpleados = new ArrayList<>();
+            modeloEmpleados = gestionAeroLinea.obtenerEmpleados();
+            boolean bandera = false;
+            boolean banderaRol = false;
+            for (int i = 0; i < modeloEmpleados.size(); i++) {
+                String cedula = modeloEmpleados.get(i).getCedula();
+                String password = modeloEmpleados.get(i).getPassword();
+                String rol = modeloEmpleados.get(i).getRol();
+
+                if(cedula.equals(txtCedula.getText()) && password.equals(txtPass.getText()) ){
+                    bandera = true;
+
+                    if(rol.equals("Agente"))
+                        banderaRol = true;
+                    else if (rol.equals("Administrador"))
+                            banderaRol = false;
+
+                    break;
+                }else{
+                    bandera = false;
+                }
+            }
+
+            if(bandera == true){
+                if(banderaRol == true)
+                    System.out.println("Agente");
+                else if(banderaRol == false)
+                    System.out.println("Administrador");
+            }else {
+                Object[] options = {"Aceptar"};
+                int n = JOptionPane.showOptionDialog(this,
+                        "El usuario ingresado no existe", "Error",
+                        JOptionPane.PLAIN_MESSAGE,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+                txtCedula.setText("");
+                txtPass.setText("");
+                txtCedula.requestFocus();
+            }
         }
     }
 }
