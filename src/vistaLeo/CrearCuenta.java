@@ -37,6 +37,8 @@ public class CrearCuenta  extends JFrame implements ActionListener{
 
     public CrearCuenta() {
 
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         setVisible(true);
 
         lblCodigo = new JLabel("Código:");
@@ -151,13 +153,21 @@ public class CrearCuenta  extends JFrame implements ActionListener{
 
                 gestionAeroLinea.crearUsuario(cedula, nombre, apellido, password, pregunta, respuesta, rol);
 
+                camCedula.setText("");
+                camNombre.setText("");
+                camApellido.setText("");
+                camContrasenia.setText("");
+                camRespuesta.setText("");
+                camCedula.requestFocus();
+
                 break;
 
             case "bntCancelar":
-                System.out.println("bntCancelar");
+                MenuAdministrador menuAdministrador = new MenuAdministrador();
+                menuAdministrador.setSize(600,500);
+                menuAdministrador.ejecutar();
+                dispose();
                 break;
-
-
 
             default:
                 break;

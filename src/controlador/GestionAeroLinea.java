@@ -1,8 +1,6 @@
 package controlador;
 
 import modelo.ModeloEmpleado;
-import modelo.ModeloPreFactura;
-import vistaLeo.CrearCuenta;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -102,7 +102,7 @@ public class MenuAdministrador extends JFrame implements MouseListener {
     }
 
     public void llamarRegistro(){
-        setVisible(false);
+        dispose();
         CrearCuenta  crearCuenta = new CrearCuenta();
     }
 

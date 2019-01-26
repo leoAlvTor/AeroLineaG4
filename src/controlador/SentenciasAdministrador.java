@@ -1,7 +1,6 @@
 package controlador;
 
 import modelo.ModeloEmpleado;
-import modelo.ModeloPreFactura;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

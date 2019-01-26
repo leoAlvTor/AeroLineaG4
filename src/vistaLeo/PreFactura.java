@@ -1,8 +1,6 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
-import modelo.ModeloPreFactura;
-import modelo.ModeloTablaPreFactura;
 
 import javax.swing.*;
 import java.awt.*;
