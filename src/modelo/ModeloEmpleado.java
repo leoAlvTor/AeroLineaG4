@@ -3,6 +3,8 @@ package modelo;
 public class ModeloEmpleado extends ModeloPersona{
     private String rol, password, pregunta, respuesta;
 
+    public ModeloEmpleado(){}
+
     public ModeloEmpleado(String rol, String password, String pregunta, String respuesta) {
         this.rol = rol;
         this.password = password;
@@ -57,6 +59,6 @@ public class ModeloEmpleado extends ModeloPersona{
                 ", password='" + password + '\'' +
                 ", pregunta='" + pregunta + '\'' +
                 ", respuesta='" + respuesta + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

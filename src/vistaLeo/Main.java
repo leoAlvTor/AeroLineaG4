@@ -1,16 +1,19 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
+import modelo.ModeloEmpleado;
 
 import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Main {
     public static void main(String[] leo){
-
+/*
         System.out.println();
         LogIn logIn = new LogIn();
         logIn.init();
@@ -37,6 +40,10 @@ public class Main {
 
        // FormaPago formaPago= new FormaPago();
 
+        GestionAeroLinea gestionAeroLinea= new GestionAeroLinea();
+        List<ModeloEmpleado> modeloEmpleados = new ArrayList<>();
+        modeloEmpleados = gestionAeroLinea.obtenerEmpleados();
+        System.out.println(modeloEmpleados.get(0).toString());
 
             Date date = new Date();
         Calendar calendar = Calendar.getInstance();
