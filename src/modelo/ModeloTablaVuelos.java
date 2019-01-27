@@ -20,19 +20,7 @@ public class ModeloTablaVuelos extends AbstractTableModel {
 
 
         super();
-        ModeloVuelos modeloVuelos = new ModeloVuelos();
-        modeloVuelos.setId("1");
-        modeloVuelos.setCapacidad("2");
-        modeloVuelos.setSalida("12:00");
-        modeloVuelos.setLlegada("14:00");
-        modeloVuelos.setTipo("I");
-        modeloVuelos.setAeropuertoSalida("cuenca");
-        modeloVuelos.setAeropuertoLlegada("quito");
-        modeloVuelos.setAvion("1");
-        modeloVuelos.setFechaSalida("22");
-        modeloVuelos.setFechaLLegada("11");
         datos = new ArrayList<ModeloVuelos>();
-        datos.add(modeloVuelos);
     }
 
     public ModeloTablaVuelos(List<ModeloVuelos> datoss){

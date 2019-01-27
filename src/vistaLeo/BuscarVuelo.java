@@ -5,46 +5,31 @@ import modelo.ModeloTablaVuelos;
 import modelo.ModeloVuelos;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuscarVuelo extends JFrame {
+public class BuscarVuelo extends JFrame implements ActionListener {
 
     private JButton btnRegresar, btnOtroVuelo;
     private JTable tablaVuelos;
+    private String seleccion;
 
     public BuscarVuelo(){
         ejecutar();
     }
 
     public void ejecutar(){
-        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
-        List<String> lista= new ArrayList<>();
-        lista = gestionAeroLinea.destinos();
-
-
-        String[] destinos = new String[lista.size()];
-
-        for (int i = 0; i < lista.size(); i++) {
-            destinos[i] = lista.get(i);
-        }
-
-        String seleccion = (String) JOptionPane.showInputDialog(this,
-                "What is your favorite pizza?",
-                "Favorite Pizza",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                destinos,
-                destinos[0]);
+        setLayout(null);
 
         setVisible(true);
-        setSize(1100,600);
-
-        setLayout(null);
+        setSize(1100,650);
 
         init();
 
-        llenarTabla(seleccion);
+        mostrarVuelos();
+
     }
 
     public void init(){
@@ -57,6 +42,21 @@ public class BuscarVuelo extends JFrame {
 
         add(jScrollPane);
 
+        btnOtroVuelo = new JButton("Mostrar destinos disponibles");
+        btnOtroVuelo.setActionCommand("mostrar");
+        btnOtroVuelo.addActionListener(this);
+        btnOtroVuelo.setSize(250,30);
+        btnOtroVuelo.setLocation(275, 550);
+        add(btnOtroVuelo);
+
+        btnRegresar = new JButton("Regresar al menu principal");
+        btnRegresar.setActionCommand("salir");
+        btnRegresar.addActionListener(this);
+        btnRegresar.setSize(250,30);
+        btnRegresar.setLocation(550, 550);
+        add(btnRegresar);
+
+        repaint();
     }
 
     public void llenarTabla(String destino){
@@ -66,5 +66,45 @@ public class BuscarVuelo extends JFrame {
         modeloTablaVuelos = gestionAeroLinea.listarVuelosPorDestino(destino);
 
         tablaVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
+    }
+
+    public void regresarMenu(){
+        dispose();
+        MenuAdministrador menuAdministrador = new MenuAdministrador();
+        menuAdministrador.setSize(600,500);
+        menuAdministrador.ejecutar();
+    }
+
+    public void mostrarVuelos(){
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        List<String> lista= new ArrayList<>();
+        lista = gestionAeroLinea.destinos();
+
+
+        String[] destinos = new String[lista.size()];
+
+        for (int i = 0; i < lista.size(); i++) {
+            destinos[i] = lista.get(i);
+        }
+
+        seleccion = (String) JOptionPane.showInputDialog(this,
+                "Cual es el destino deseado?",
+                "Destinos disponibles",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                destinos,
+                destinos[0]);
+
+        llenarTabla(seleccion);
+
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("mostrar"))
+            mostrarVuelos();
+        else if(e.getActionCommand().equals("salir"))
+            regresarMenu();
     }
 }

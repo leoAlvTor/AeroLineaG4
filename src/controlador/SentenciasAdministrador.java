@@ -78,8 +78,6 @@ public class SentenciasAdministrador {
         }catch(SQLException e){
             e.printStackTrace();
         }
-        System.out.println("Fuera del bucle~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println(modeloVuelosList.get(0).toString());
         return modeloVuelosList;
     }
 
