@@ -26,21 +26,19 @@ public class GestionAeroLinea {
 
 
     public List<ModeloVuelos> listarVuelosPorDestino(String destino) {
+        List<ModeloVuelos> datos = new ArrayList<>();
         conexionAdministrador = new ConexionAdministrador();
         conexionAdministrador.Conectar();
 
-        List<ModeloVuelos> modeloVuelosList = new ArrayList<>();
-
-        if (conexionAdministrador.getConnection() != null) {
+        if(conexionAdministrador.getConnection()!= null){
             System.out.println("Conexion administrador correcta");
             sentenciasAdministrador = new SentenciasAdministrador();
-            modeloVuelosList = sentenciasAdministrador.listarVuelosPorDestino(conexionAdministrador, destino);
-
-        } else
-            System.out.println("Conexion administrador incorrecta");
+            datos = sentenciasAdministrador.listarVuelosPorDestino(conexionAdministrador, destino);
+        }else{
+            System.out.println("Conexion amdinistrador incorrecta");
+        }
         conexionAdministrador.Desconectar();
-
-        return modeloVuelosList;
+        return datos;
     }
 
     public void crearUsuario(String pCedula, String pNombre, String pApellido,

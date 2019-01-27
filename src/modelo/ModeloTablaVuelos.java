@@ -7,19 +7,37 @@ import java.util.List;
 public class ModeloTablaVuelos extends AbstractTableModel {
     private String[] columnas = {"id", "capacidad", "Salida", "Llegada", "Tipo", "Costo", "AeropuertoSalida",
             "AeropuertoLlegada", "Avion", "FechaSalida", "FechaLLegada"};
+
+
     private Class[] tipos = {String.class, String.class, String.class, String.class, String.class, String.class,
             String.class, String.class, String.class, String.class, String.class};
 
     private List<ModeloVuelos> datos;
 
+
+
     public ModeloTablaVuelos(){
+
+
         super();
-        datos = new ArrayList<>();
+        ModeloVuelos modeloVuelos = new ModeloVuelos();
+        modeloVuelos.setId("1");
+        modeloVuelos.setCapacidad("2");
+        modeloVuelos.setSalida("12:00");
+        modeloVuelos.setLlegada("14:00");
+        modeloVuelos.setTipo("I");
+        modeloVuelos.setAeropuertoSalida("cuenca");
+        modeloVuelos.setAeropuertoLlegada("quito");
+        modeloVuelos.setAvion("1");
+        modeloVuelos.setFechaSalida("22");
+        modeloVuelos.setFechaLLegada("11");
+        datos = new ArrayList<ModeloVuelos>();
+        datos.add(modeloVuelos);
     }
 
-    public ModeloTablaVuelos(List<ModeloVuelos> datos){
+    public ModeloTablaVuelos(List<ModeloVuelos> datoss){
         super();
-        this.datos = datos;
+        this.datos = datoss;
     }
 
 

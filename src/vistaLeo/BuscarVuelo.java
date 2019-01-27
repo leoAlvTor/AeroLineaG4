@@ -2,16 +2,16 @@ package vistaLeo;
 
 import controlador.GestionAeroLinea;
 import modelo.ModeloTablaVuelos;
+import modelo.ModeloVuelos;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BuscarVuelo extends JFrame {
 
     private JButton btnRegresar, btnOtroVuelo;
-    private JTable table;
+    private JTable tablaVuelos;
 
     public BuscarVuelo(){
         ejecutar();
@@ -29,7 +29,7 @@ public class BuscarVuelo extends JFrame {
             destinos[i] = lista.get(i);
         }
 
-        String favoritePizza = (String) JOptionPane.showInputDialog(this,
+        String seleccion = (String) JOptionPane.showInputDialog(this,
                 "What is your favorite pizza?",
                 "Favorite Pizza",
                 JOptionPane.QUESTION_MESSAGE,
@@ -43,17 +43,28 @@ public class BuscarVuelo extends JFrame {
         setLayout(null);
 
         init();
+
+        llenarTabla(seleccion);
     }
 
     public void init(){
-        table = new JTable();
-        table.setModel(new ModeloTablaVuelos());
+        tablaVuelos = new JTable();
+        tablaVuelos.setModel(new ModeloTablaVuelos());
 
-        JScrollPane jScrollPane = new JScrollPane(table);
+        JScrollPane jScrollPane = new JScrollPane(tablaVuelos);
         jScrollPane.setSize(1080, 500);
         jScrollPane.setLocation(10, 10);
 
         add(jScrollPane);
 
+    }
+
+    public void llenarTabla(String destino){
+        List<ModeloVuelos> modeloTablaVuelos;
+
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        modeloTablaVuelos = gestionAeroLinea.listarVuelosPorDestino(destino);
+
+        tablaVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
     }
 }

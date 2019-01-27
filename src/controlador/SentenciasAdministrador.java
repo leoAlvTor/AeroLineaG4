@@ -28,30 +28,49 @@ public class SentenciasAdministrador {
         ModeloVuelos modeloVuelos = new ModeloVuelos();
 
         try{
-            String sentencia = "select * from age_vuelos," +
-                    "(select are_id" +
-                    "from age_areopuertos" +
-                    "where are_direccion = ?), leo" +
-                    "where age_vuelos.age_areopuertos_are_id1 = leo.are_id";
+            String sentenciaDestino = "select * from age_areopuertos where are_direccion = ?";
 
-            psentencia = con.getConnection().prepareStatement(sentencia);
-
+            psentencia = con.getConnection().prepareStatement(sentenciaDestino);
             psentencia.setString(1, destino);
 
             resultado = psentencia.executeQuery();
 
-            while(resultado.next()){
+
+            String valor = "";
+            while(resultado.next())
+                valor = resultado.getString("are_id");
+
+            System.out.println(valor + " Valor de la busqueda de id<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+            sentenciaDestino = "select * from age_vuelos where  age_areopuertos_are_id1 = ?";
+            psentencia = null;
+            psentencia = con.getConnection().prepareStatement(sentenciaDestino);
+            psentencia.setString(1, valor);
+
+            System.out.println("Antes del resultado");
+
+            resultSet = psentencia.executeQuery();
+
+            System.out.println("Despues del executeQuery");
+
+            while(resultSet.next()){
+                System.out.println("Entro al bucle");
+
                 modeloVuelos = new ModeloVuelos();
 
-                modeloVuelos.setId(resultado.getString("vue_id"));
-                modeloVuelos.setCapacidad(resultado.getString("vue_capacidad"));
-                modeloVuelos.setSalida(resultado.getString("vue_hora_salida"));
-                modeloVuelos.setLlegada(resultado.getString("vue_hora_llegada"));
-                modeloVuelos.setTipo(resultado.getString("vue_tip_vuelo"));
-                modeloVuelos.setCosto(resultado.getString("vue_costo"));
-                modeloVuelos.setAeropuertoSalida(resultado.getString("age_areopuertos_are_id"));
-                modeloVuelos.setAeropuertoLlegada(resultado.getString("age_areopuertos_are_id1"));
-                modeloVuelos.setAvion(resultado.getString("age_avion_avi_id"));
+                modeloVuelos.setId(resultSet.getString("vue_id"));
+                modeloVuelos.setCapacidad(resultSet.getString("vue_capacidad"));
+                modeloVuelos.setSalida(resultSet.getString("vue_hora_salida"));
+                modeloVuelos.setLlegada(resultSet.getString("vue_hora_llegada"));
+                modeloVuelos.setTipo(resultSet.getString("vue_tip_vuelo"));
+                modeloVuelos.setCosto(resultSet.getString("vue_costo"));
+                modeloVuelos.setAeropuertoSalida(resultSet.getString("age_areopuertos_are_id"));
+                modeloVuelos.setAeropuertoLlegada(resultSet.getString("age_areopuertos_are_id1"));
+                modeloVuelos.setAvion(resultSet.getString("age_avion_avi_id"));
+                modeloVuelos.setFechaSalida(resultSet.getString("fecha_salida"));
+                modeloVuelos.setFechaLLegada(resultSet.getString("fecha_llegada"));
+
+                System.out.println(modeloVuelos.toString());
 
                 modeloVuelosList.add(modeloVuelos);
             }
@@ -59,7 +78,8 @@ public class SentenciasAdministrador {
         }catch(SQLException e){
             e.printStackTrace();
         }
-
+        System.out.println("Fuera del bucle~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println(modeloVuelosList.get(0).toString());
         return modeloVuelosList;
     }
 
