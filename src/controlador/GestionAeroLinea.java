@@ -23,8 +23,7 @@ public class GestionAeroLinea {
     |
      */
 
-    
-    
+
 
     public List<ModeloVuelos> listarVuelosPorDestino(String destino) {
         List<ModeloVuelos> datos = new ArrayList<>();
@@ -138,36 +137,5 @@ public class GestionAeroLinea {
 
         return datos;
     }
-    
-    
-    /*
-    |
-    |
-    |   ~~~~ Empieza todas las sentencias del Agente del sistema
-    |
-    |
-     */
-    
-    
-    public void ingresarCliente(String nom,String ced, String direcc, String fecha_nac) {
-    	
-    	conexionAgente=new ConexionAgente();
-    	conexionAgente.Conectar();
-    	sentenciasAgente=new SentenciasAgente();
-    	
-    	
-    	if(conexionAgente.getConnection() != null){
-            System.out.println("Conexion Agente correcta...");
-          sentenciasAgente.crearCliente(conexionAgente, nom, ced, direcc, fecha_nac);
-        }else{
-            System.out.println("La conexion no se ha realizado correctamente");
-        }
-        conexionAgente.Desconectar();
-
-    	
-    }
-    
-    
-    
 
 }

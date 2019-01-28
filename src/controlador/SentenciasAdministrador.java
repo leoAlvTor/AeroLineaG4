@@ -22,7 +22,6 @@ public class SentenciasAdministrador {
     private ModeloEmpleado modeloEmpleado;
 
 
-    
 
     public List<ModeloVuelos> listarVuelosPorDestino(ConexionAdministrador con, String destino){
         List<ModeloVuelos> modeloVuelosList = new ArrayList<>();
@@ -110,8 +109,6 @@ public class SentenciasAdministrador {
 
     }
 
-    
-    
     public List<String> listarDestinos(ConexionAdministrador con){
         List<String> datos = new ArrayList<>();
 

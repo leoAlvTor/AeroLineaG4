@@ -101,35 +101,13 @@ public class MenuAgente extends JFrame implements MouseListener {
         txtAyuda.setToolTipText("Muestra informacion del sistema");
 
     }
-    /***
-     * ojo aqui temporal
-     */
-    private void funcioMostrar() {
-    	dispose();
-		vntRegCliente v=new vntRegCliente();
-	}
-    
-   
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    	Object event = e.getSource();
-        JLabel label = (JLabel) event;
-        if(label == lblMostrar)
-        	funcioMostrar();
-        else if(label == lblComprar)
-            System.out.println("Acutalizar");
-        else if(label == lblReporte)
-            System.out.println("Eliminar");
-        else if(label == lblSalir)
-            System.out.println("Salir");
-        else if(label == lblAyuda) 
-        	System.out.println("ayuda");
+
     }
 
-   
-
-	@Override
+    @Override
     public void mousePressed(MouseEvent e) {
 
     }
