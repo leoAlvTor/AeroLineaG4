@@ -1,16 +1,21 @@
 package vistaLeo;
 
-import modelo.ModMiniTablaVuelos;
-import modelo.ModeloMiniVuelos;
+import controlador.GestionAeroLinea;
 import modelo.ModeloTablaVuelos;
+import modelo.ModeloVuelos;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Actualizar extends JFrame {
+public class Actualizar extends JFrame implements ActionListener{
 
     private JButton btnBuscar, btnActualizar, btnCancelar, btnSalir;
 
@@ -79,10 +84,20 @@ public class Actualizar extends JFrame {
 
         // Botones
         btnBuscar = new JButton("Buscar por destino");
-        btnActualizar = new JButton("Actualizar datos");
-        btnCancelar = new JButton("Cancelar actualizacion");
-        btnSalir = new JButton("Regresar al menu");
+        btnBuscar.setActionCommand("buscar");
+        btnBuscar.addActionListener(this);
 
+        btnActualizar = new JButton("Actualizar datos");
+        btnActualizar.setActionCommand("actualizar");
+        btnActualizar.addActionListener(this);
+        btnCancelar = new JButton("Cancelar actualizacion");
+        btnCancelar.setActionCommand("cancelar");
+        btnCancelar.addActionListener(this);
+        btnSalir = new JButton("Regresar al menu");
+        btnSalir.setActionCommand("salir");
+        btnSalir.addActionListener(this);
+
+        cargarDestinos();
     }
 
     public void addLayouts(){
@@ -117,7 +132,7 @@ public class Actualizar extends JFrame {
         pnlLbl.setBorder(border1);
 
         tableMiniVuelos = new JTable();
-        tableMiniVuelos.setModel(new ModMiniTablaVuelos());
+        tableMiniVuelos.setModel(new ModeloTablaVuelos());
         scrollPane = new JScrollPane(tableMiniVuelos);
         scrollPane.setBorder(border1);
 
@@ -138,5 +153,106 @@ public class Actualizar extends JFrame {
         pnlPrueba.add(pnlBotones, BorderLayout.SOUTH);
 
         add(pnlPrueba);
+
+    }
+
+    public void buscarVuelos(){
+        String seleccion;
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        List<String> lista= new ArrayList<>();
+        lista = gestionAeroLinea.destinos();
+
+        String[] destinos = new String[lista.size()];
+
+        for (int i = 0; i < lista.size(); i++)
+            destinos[i] = lista.get(i);
+
+        seleccion = (String) JOptionPane.showInputDialog(this,
+                "Cual es el destino deseado?",
+                "Destinos disponibles",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                destinos,
+                destinos[0]);
+
+        llenarTabla(seleccion);
+    }
+
+    public void llenarTabla(String seleccion){
+        List<ModeloVuelos> modeloTablaVuelos;
+
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        modeloTablaVuelos = gestionAeroLinea.listarVuelosPorDestino(seleccion);
+
+        tableMiniVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
+
+        tableMiniVuelos.setCellSelectionEnabled(true);
+        ListSelectionModel cellSelectionModel = tableMiniVuelos.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                if(!e.getValueIsAdjusting() && tableMiniVuelos.getSelectedRow()!= -1) {
+
+                    int fila = 0;
+                    fila = tableMiniVuelos.getSelectedRow();
+                    int columna = 0;
+                    String datos;
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna);
+                    System.out.println(datos);
+
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna);
+                    txtId.setText(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 1);
+                    txtCapacidad.setText(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 2);
+                    txtSalida.setText(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 3);
+                    txtLlegada.setText(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 4);
+                    txtTipo.setText(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 5);
+                    txtCosto.setText(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 6);
+                    comboAeroSalida.setSelectedItem(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 7);
+                    comboAeroLlegada.setSelectedItem(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 8);
+                    txtAvion.setText(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 9);
+                    txtFechaSalida.setText(datos);
+                    datos = (String) tableMiniVuelos.getValueAt(fila, columna + 10);
+                    txtFechaLlegada.setText(datos);
+                }
+            }
+        });
+
+    }
+
+    public void cargarDestinos(){
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        List<String> listaDestinos = new ArrayList<>();
+        listaDestinos = gestionAeroLinea.destinos();
+
+
+        for (int i = 0; i < listaDestinos.size(); i++) {
+            comboAeroSalida.addItem(listaDestinos.get(i));
+            comboAeroLlegada.addItem(listaDestinos.get(i));
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String accion = e.getActionCommand();
+
+        switch (accion){
+            case "buscar":
+                buscarVuelos();
+                break;
+        }
+
+
     }
 }
