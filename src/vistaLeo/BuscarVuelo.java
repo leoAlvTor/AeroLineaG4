@@ -5,6 +5,7 @@ import modelo.ModeloTablaVuelos;
 import modelo.ModeloVuelos;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,9 +23,17 @@ public class BuscarVuelo extends JFrame implements ActionListener {
 
     public void ejecutar(){
         setLayout(null);
-
+        setTitle("Listado de vuelos por destino");
         setVisible(true);
         setSize(1100,650);
+
+        // Ventana centrada
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth())/2);
+        int y = (int) ((dimension.getHeight()) - this.getHeight())/2;
+        this.setLocation(x,y);
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         init();
 

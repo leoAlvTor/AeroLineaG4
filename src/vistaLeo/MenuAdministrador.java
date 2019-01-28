@@ -115,10 +115,11 @@ public class MenuAdministrador extends JFrame implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         Object event = e.getSource();
         JLabel label = (JLabel) event;
+        Actualizar actualizar;
         if(label == lblBuscar)
             llamarBuscarVuelos();
         else if(label == lblActualizar)
-            System.out.println("Acutalizar");
+            actualizar = new Actualizar();
         else if(label == lblEliminar)
             System.out.println("Eliminar");
         else if(label == lblSalir)
