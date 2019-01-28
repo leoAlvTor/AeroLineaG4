@@ -24,6 +24,18 @@ public class GestionAeroLinea {
      */
 
 
+    public void eliminarVuelos(String vuelo){
+        int vueId = Integer.parseInt(vuelo);
+        conexionAdministrador = new ConexionAdministrador();
+        conexionAdministrador.Conectar();
+
+        if(conexionAdministrador.getConnection() != null){
+            System.out.println("Conexion administrador correcta");
+            sentenciasAdministrador = new SentenciasAdministrador();
+            sentenciasAdministrador.eliminarVuelo(conexionAdministrador, vueId);
+        }else
+            System.out.println("Error al momento de conexion con la base de datos");
+    }
 
     public List<ModeloVuelos> listarVuelosPorDestino(String destino) {
         List<ModeloVuelos> datos = new ArrayList<>();

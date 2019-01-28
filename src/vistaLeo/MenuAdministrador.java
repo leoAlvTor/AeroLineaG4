@@ -119,10 +119,13 @@ public class MenuAdministrador extends JFrame implements MouseListener {
         Eliminar eliminar;
         if(label == lblBuscar)
             llamarBuscarVuelos();
-        else if(label == lblActualizar)
+        else if(label == lblActualizar) {
             actualizar = new Actualizar();
-        else if(label == lblEliminar)
+            dispose();
+        }else if(label == lblEliminar) {
             eliminar = new Eliminar();
+            dispose();
+        }
         else if(label == lblSalir)
             System.out.println("Salir");
         else if(label == lblRegistrar)

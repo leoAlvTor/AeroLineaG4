@@ -5,6 +5,8 @@ import modelo.ModeloTablaVuelos;
 import modelo.ModeloVuelos;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,9 +43,11 @@ public class Eliminar extends JFrame implements ActionListener {
            btnEliminar = new JButton("Eliminar vuelo");
            btnEliminar.setActionCommand("eliminar");
            btnEliminar.addActionListener(this);
-           btnSalir = new JButton("Cancelar");
-           btnSalir.setActionCommand("cancelar");
+
+           btnSalir = new JButton("Salir");
+           btnSalir.setActionCommand("salir");
            btnSalir.addActionListener(this);
+
            btnBuscar = new JButton("Buscar vuelo");
            btnBuscar.setActionCommand("buscar");
            btnBuscar.addActionListener(this);
@@ -67,6 +71,27 @@ public class Eliminar extends JFrame implements ActionListener {
            add(pnlPrincipal);
            setSize(946,600);
 
+           txtCodigo.setEditable(false);
+
+        tablaVuelos.setCellSelectionEnabled(true);
+        ListSelectionModel cellSelectionModel = tablaVuelos.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                if(!e.getValueIsAdjusting() && tablaVuelos.getSelectedRow()!= -1) {
+                    int fila = 0;
+                    fila = tablaVuelos.getSelectedRow();
+                    int columna = 0;
+                    String datos;
+                    datos = (String) tablaVuelos.getValueAt(fila, columna);
+                    datos = (String) tablaVuelos.getValueAt(fila, columna);
+                    txtCodigo.setText(datos);
+                }
+            }
+        });
 
     }
 
@@ -103,14 +128,44 @@ public class Eliminar extends JFrame implements ActionListener {
         tablaVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
     }
 
+    public void eliminar(){
+        if(txtCodigo.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado ningun vuelo");
+        }else{
+            System.out.println("ALV+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            int opcion = JOptionPane.showConfirmDialog(this,
+                    "Esta seguro que desea eliminar el vuelo?","Eliminar un vuelo", JOptionPane.YES_NO_OPTION);
+
+            if(opcion == 0){
+                GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+                gestionAeroLinea.eliminarVuelos(txtCodigo.getText());
+                txtCodigo.setText("");
+                btnBuscar.requestFocus();
+
+            }else if(opcion == 1){
+                System.out.println("No pasa nada");
+            }
+        }
+
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();
 
         switch(comando){
             case "buscar":
-
+                buscar();
                 break;
+            case "salir":
+                MenuAdministrador menuAdministrador = new MenuAdministrador();
+                menuAdministrador.setSize(600,500);
+                menuAdministrador.ejecutar();
+                dispose();
+                break;
+            case "eliminar":
+                eliminar();
         }
     }
 }

@@ -130,6 +130,17 @@ public class SentenciasAdministrador {
         return modeloVuelosList;
     }
 
+    public void eliminarVuelo(ConexionAdministrador con,int vuelo){
+        try{
+            String sentencia = "Delete from age_vuelos where vue_id = ?";
+            psentencia = con.getConnection().prepareStatement(sentencia);
+            psentencia.setInt(1, vuelo);
+            psentencia.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public void crearUsuario(ConexionAdministrador con, String pCedula, String pNombre, String pApellido,
                              String pPassword, String pPregunta, String pRespuesta, String pRol){
 
