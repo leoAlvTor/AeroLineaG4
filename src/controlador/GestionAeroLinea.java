@@ -41,6 +41,24 @@ public class GestionAeroLinea {
         return datos;
     }
 
+    public void actualizarVuelos(String id, String capacidad, String hSalida,
+                                 String hLlegada, String tipo, String costo, String paeroSalida, String paeroLlegada,
+                                 String avion, String fSalida, String fLlegada) {
+        conexionAdministrador = new ConexionAdministrador();
+        conexionAdministrador.Conectar();
+
+        if(conexionAdministrador.getConnection()!=null){
+            System.out.println("Conexion administrador correcta");
+            sentenciasAdministrador = new SentenciasAdministrador();
+            sentenciasAdministrador.actualizarVuelos(conexionAdministrador, id, capacidad, hSalida, hLlegada, tipo,
+                    costo, paeroSalida, paeroLlegada, avion, fSalida, fLlegada);
+        }else{
+            System.out.println("Conexion administrador incorrecta");
+        }
+        conexionAdministrador.Desconectar();
+
+    }
+
     public void crearUsuario(String pCedula, String pNombre, String pApellido,
                              String pPassword, String pPregunta, String pRespuesta, String pRol){
 
@@ -76,7 +94,6 @@ public class GestionAeroLinea {
 
         return modeloEmpleadoList;
     }
-
     public List<String> destinos(){
 
         List<String> datos = new ArrayList<>();

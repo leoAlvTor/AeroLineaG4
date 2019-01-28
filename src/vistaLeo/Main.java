@@ -14,9 +14,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] leo){
 
-
-        //Actualizar actualizar = new Actualizar();
-
+        //Eliminar eliminar = new Eliminar();
 
         System.out.println();
         LogIn logIn = new LogIn();

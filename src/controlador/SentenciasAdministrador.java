@@ -21,7 +21,66 @@ public class SentenciasAdministrador {
 
     private ModeloEmpleado modeloEmpleado;
 
+    public void actualizarVuelos(ConexionAdministrador con, String id, String capacidad, String hSalida,
+                                 String hLlegada, String tipo, String costo, String paeroSalida, String paeroLlegada,
+                                 String avion, String fSalida, String fLlegada){
+        try{
+            String obtenerIds = "Select * from age_areopuertos where are_direccion = ?";
+            psentencia = con.getConnection().prepareStatement(obtenerIds);
+            psentencia.setString(1, paeroSalida);
 
+            resultado = psentencia.executeQuery();
+
+            String aeroSalidaId = "";
+            while(resultado.next())
+                aeroSalidaId = resultado.getString("are_id");
+
+            System.out.println("Id del aeropuerto de salida");
+            psentencia = null;
+            resultado = null;
+
+            psentencia = con.getConnection().prepareStatement(obtenerIds);
+            psentencia.setString(1, paeroLlegada);
+
+            resultado = psentencia.executeQuery();
+
+            String aeroLlegadaId = "";
+            while(resultado.next())
+                aeroLlegadaId = resultado.getString("are_id");
+            System.out.println("Id del aeropuerto de llegada");
+
+            psentencia = null;
+            
+            String consultaUpdate = "update age_vuelos set vue_id = ?, vue_capacidad = ?, vue_hora_salida = ?," +
+                    " vue_hora_llegada = ?, vue_tip_vuelo = ?, vue_costo = ?, age_areopuertos_are_id = ?," +
+                    " age_areopuertos_are_id1 = ?, age_avion_avi_id = ?, fecha_salida = ?, fecha_llegada = ?" +
+                    " where vue_id = ?";
+
+            System.out.println("Antes de mandar la consulta");
+            psentencia = con.getConnection().prepareStatement(consultaUpdate);
+            System.out.println("Despues de mandar la consulta");
+            psentencia.setInt(1, Integer.parseInt(id));
+            psentencia.setInt(2, Integer.parseInt(capacidad));
+            psentencia.setString(3, hSalida);
+            psentencia.setString(4, hLlegada);
+            psentencia.setString(5, tipo);
+            psentencia.setString(6, costo);
+            psentencia.setInt(7, Integer.parseInt(aeroSalidaId));
+            psentencia.setInt(8, Integer.parseInt(aeroLlegadaId));
+            psentencia.setInt(9, Integer.parseInt(avion));
+            psentencia.setString(10, fSalida);
+            psentencia.setString(11, fLlegada);
+            psentencia.setInt(12, Integer.parseInt(id));
+            System.out.println("Antes de la sentencia");
+            psentencia.executeUpdate();
+
+            System.out.println("Al final de todo las cosas anteriores");
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
 
     public List<ModeloVuelos> listarVuelosPorDestino(ConexionAdministrador con, String destino){
         List<ModeloVuelos> modeloVuelosList = new ArrayList<>();
@@ -40,22 +99,14 @@ public class SentenciasAdministrador {
             while(resultado.next())
                 valor = resultado.getString("are_id");
 
-            System.out.println(valor + " Valor de la busqueda de id<<<<<<<<<<<<<<<<<<<<<<<<<<");
-
             sentenciaDestino = "select * from age_vuelos where  age_areopuertos_are_id1 = ?";
             psentencia = null;
             psentencia = con.getConnection().prepareStatement(sentenciaDestino);
             psentencia.setString(1, valor);
 
-            System.out.println("Antes del resultado");
-
             resultSet = psentencia.executeQuery();
 
-            System.out.println("Despues del executeQuery");
-
             while(resultSet.next()){
-                System.out.println("Entro al bucle");
-
                 modeloVuelos = new ModeloVuelos();
 
                 modeloVuelos.setId(resultSet.getString("vue_id"));
@@ -70,8 +121,6 @@ public class SentenciasAdministrador {
                 modeloVuelos.setFechaSalida(resultSet.getString("fecha_salida"));
                 modeloVuelos.setFechaLLegada(resultSet.getString("fecha_llegada"));
 
-                System.out.println(modeloVuelos.toString());
-
                 modeloVuelosList.add(modeloVuelos);
             }
 
@@ -80,7 +129,6 @@ public class SentenciasAdministrador {
         }
         return modeloVuelosList;
     }
-
 
     public void crearUsuario(ConexionAdministrador con, String pCedula, String pNombre, String pApellido,
                              String pPassword, String pPregunta, String pRespuesta, String pRol){

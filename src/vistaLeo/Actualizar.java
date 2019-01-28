@@ -90,9 +90,11 @@ public class Actualizar extends JFrame implements ActionListener{
         btnActualizar = new JButton("Actualizar datos");
         btnActualizar.setActionCommand("actualizar");
         btnActualizar.addActionListener(this);
+
         btnCancelar = new JButton("Cancelar actualizacion");
         btnCancelar.setActionCommand("cancelar");
         btnCancelar.addActionListener(this);
+
         btnSalir = new JButton("Regresar al menu");
         btnSalir.setActionCommand("salir");
         btnSalir.addActionListener(this);
@@ -178,6 +180,26 @@ public class Actualizar extends JFrame implements ActionListener{
         llenarTabla(seleccion);
     }
 
+    public void actualizarVuelos(){
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        String id = txtId.getText();
+        String capacidad = txtCapacidad.getText();
+        String hSalida = txtSalida.getText();
+        String hLlegada = txtLlegada.getText();
+        String tipo = txtTipo.getText();
+        String costo = txtCosto.getText();
+        String areoSalida = (String) comboAeroSalida.getSelectedItem();
+        String aeroLlegada = (String) comboAeroLlegada.getSelectedItem();
+        String avion = txtAvion.getText();
+        String fechaSalida = txtFechaSalida.getText();
+        String fechaLlegada = txtFechaLlegada.getText();
+
+        gestionAeroLinea.actualizarVuelos(id, capacidad, hSalida, hLlegada, tipo, costo, areoSalida, aeroLlegada,
+                avion, fechaSalida, fechaLlegada);
+
+
+    }
+
     public void llenarTabla(String seleccion){
         List<ModeloVuelos> modeloTablaVuelos;
 
@@ -216,9 +238,9 @@ public class Actualizar extends JFrame implements ActionListener{
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna + 5);
                     txtCosto.setText(datos);
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna + 6);
-                    comboAeroSalida.setSelectedItem(datos);
+                    comboAeroSalida.setSelectedIndex(Integer.parseInt(datos));
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna + 7);
-                    comboAeroLlegada.setSelectedItem(datos);
+                    comboAeroLlegada.setSelectedIndex(Integer.parseInt(datos));
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna + 8);
                     txtAvion.setText(datos);
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna + 9);
@@ -243,6 +265,25 @@ public class Actualizar extends JFrame implements ActionListener{
         }
     }
 
+    public void cancelar(){
+        txtFechaLlegada.setText("");
+        txtFechaSalida.setText("");
+        txtAvion.setText("");
+        txtCosto.setText("");
+        txtTipo.setText("");
+        txtLlegada.setText("");
+        txtSalida.setText("");
+        txtCapacidad.setText("");
+        txtId.setText("");
+    }
+
+    public void vtnAdministrador(){
+        MenuAdministrador menuAdministrador = new MenuAdministrador();
+        menuAdministrador.setSize(600,500);
+        menuAdministrador.ejecutar();
+        dispose();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String accion = e.getActionCommand();
@@ -251,6 +292,17 @@ public class Actualizar extends JFrame implements ActionListener{
             case "buscar":
                 buscarVuelos();
                 break;
+            case "actualizar":
+                actualizarVuelos();
+                break;
+            case "cancelar":
+                cancelar();
+                break;
+            case "salir":
+                vtnAdministrador();
+                break;
+                default:
+                    break;
         }
 
 

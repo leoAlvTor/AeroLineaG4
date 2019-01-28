@@ -159,7 +159,7 @@ public class LogIn extends JFrame implements ActionListener {
                     MenuAdministrador menuAdministrador = new MenuAdministrador();
                     menuAdministrador.setSize(600,500);
                     menuAdministrador.ejecutar();
-                    this.setVisible(false);
+                    dispose();
                 }
             }else {
                 Object[] options = {"Aceptar"};
