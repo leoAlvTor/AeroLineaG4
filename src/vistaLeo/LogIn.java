@@ -123,6 +123,7 @@ public class LogIn extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if(e.getActionCommand().equals("login")){
+        	
             GestionAeroLinea gestionAeroLinea= new GestionAeroLinea();
             List<ModeloEmpleado> modeloEmpleados = new ArrayList<>();
             modeloEmpleados = gestionAeroLinea.obtenerEmpleados();

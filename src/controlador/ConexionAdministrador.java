@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class ConexionAdministrador {
     private String usuario = "leo_proyecto";
-    private String password = "leo";
-    private String url = "jdbc:oracle:thin:@192.168.56.101:1521:xe";
+    private String password = "pro123";
+    private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 
 
     private Connection connection = null;

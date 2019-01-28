@@ -19,8 +19,13 @@ public class Main {
         logIn.init();
         logIn.setSize(300,350);
         logIn.setLocation(870,270);
+        
+       /* 
+        
+        
+        
 
-/*
+
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         logIn.setLocation(dimension.width/2-logIn.getSize().width/2, dimension.height/2-logIn.getSize().height/2);
 
