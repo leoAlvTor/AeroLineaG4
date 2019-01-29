@@ -6,6 +6,8 @@ import modelo.ModeloCliente;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -19,14 +21,14 @@ public class PreFactura extends JFrame {
             lblTipoPer, lblPlaca;
     private JComboBox comboAsientos, comboVuelo, comboTipoPersona;
 
-    private JTextField txt1, txt2, txt3, txt4, txt5, txt6, txt7;
+    private JTextField txt2, txt3, txt4, txt5, txt6, txt7;
 
     private JTextField txtCodigo, txtOrigen, txtDestino, txtFechaSalida, txtHoraSalida, txtCosto, txtPlaca;
 
     private JButton btn1, btn2, btn3;
 
     private ArrayList<String> stringsNombres;
-    private Java2sAutoTextField txt;
+    private Java2sAutoTextField txt1;
 
     public PreFactura(){
         ejecutar();
@@ -44,13 +46,7 @@ public class PreFactura extends JFrame {
 
     public void init(){
         //crearTabla();
-
-        txt1 = new JTextField();
-        txt1.setSize(175,25);
-        txt1.setText("HOLAAAAAAAAAAAAAAAA");
-        txt1.setLocation(160,155);
-        add(txt1);
-
+        
         lblImagen = new JLabel();
         lblImagen.setIcon(new ImageIcon(this.getClass().getResource("Imagenes/avionsito.jpg")));
         lblImagen.setSize(128,128);
@@ -89,7 +85,7 @@ public class PreFactura extends JFrame {
         add(lblHoraSalida);
 
         txtHoraSalida = new JTextField();
-        txtHoraSalida.setSize(txt1.getSize());
+        txtHoraSalida.setSize(174,25);
         txtHoraSalida.setLocation(160, 305);
         add(txtHoraSalida);
 
@@ -106,7 +102,7 @@ public class PreFactura extends JFrame {
         add(lblOrigen);
 
         txtOrigen = new JTextField();
-        txtOrigen.setSize(txt1.getSize());
+        txtOrigen.setSize(txtHoraSalida.getSize());
         txtOrigen.setLocation(160, 365);
         add(txtOrigen);
 
@@ -116,7 +112,7 @@ public class PreFactura extends JFrame {
         add(lblDestino);
 
         txtDestino = new JTextField();
-        txtDestino.setSize(txt1.getSize());
+        txtDestino.setSize(txtHoraSalida.getSize());
         txtDestino.setLocation(160, 395);
         add(txtDestino);
 
@@ -126,7 +122,7 @@ public class PreFactura extends JFrame {
         add(lblCosto);
 
         txtCosto = new JTextField();
-        txtCosto.setSize(txt1.getSize());
+        txtCosto.setSize(txtHoraSalida.getSize());
         txtCosto.setLocation(160, 425);
         add(txtCosto);
 
@@ -136,7 +132,7 @@ public class PreFactura extends JFrame {
         add(lblFechaSalida);
 
         txtFechaSalida = new JTextField();
-        txtFechaSalida.setSize(txt1.getSize());
+        txtFechaSalida.setSize(txtHoraSalida.getSize());
         txtFechaSalida.setLocation(160, 455);
         add(txtFechaSalida);
 
@@ -151,7 +147,7 @@ public class PreFactura extends JFrame {
         add(lblPlaca);
 
         txtPlaca = new JTextField();
-        txtPlaca.setSize(txt1.getSize());
+        txtPlaca.setSize(txtHoraSalida.getSize());
         txtPlaca.setLocation(160, 515);
         add(txtPlaca);
 
@@ -186,33 +182,33 @@ public class PreFactura extends JFrame {
         add(btn3);
 
         txt2 = new JTextField();
-        txt2.setSize(txt1.getSize());
+        txt2.setSize(txtHoraSalida.getSize());
         txt2.setLocation(160, 185);
         add(txt2);
 
         txt3 = new JTextField();
-        txt3.setSize(txt1.getSize());
+        txt3.setSize(txtHoraSalida.getSize());
         txt3.setLocation(160, 215);
         add(txt3);
 
         txt4 = new JTextField();
-        txt4.setSize(txt1.getSize());
+        txt4.setSize(txtHoraSalida.getSize());
         txt4.setLocation(160,245);
         add(txt4);
 
         //Textos del resto
         txt5 = new JTextField();
-        txt5.setSize(txt1.getSize());
+        txt5.setSize(txtHoraSalida.getSize());
         txt5.setLocation(550,675);
         add(txt5);
 
         txt6 = new JTextField();
-        txt6.setSize(txt1.getSize());
+        txt6.setSize(txtHoraSalida.getSize());
         txt6.setLocation(550,705);
         add(txt6);
 
         txt7 = new JTextField();
-        txt7.setSize(txt1.getSize());
+        txt7.setSize(txtHoraSalida.getSize());
         txt7.setLocation(550,735);
         add(txt7);
 
@@ -220,6 +216,31 @@ public class PreFactura extends JFrame {
         repaint();
 
         obtenerClientes();
+
+        txt1 = new Java2sAutoTextField(stringsNombres);
+        txt1.setSize(175,25);
+        txt1.setLocation(160,155);
+        txt1.setText("");
+        add(txt1);
+
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                txt1.setText("-");
+                txt1.grabFocus();
+                txt1.requestFocus();
+                txt1.setText(txt1.getText());
+                txt1.selectAll();
+            }
+        });
+
+        txt1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public void llenarCombo(){
@@ -244,6 +265,8 @@ public class PreFactura extends JFrame {
         for (int i = 0; i < modeloClienteList.size(); i++) {
             stringsNombres.add(modeloClienteList.get(i).getNombre());
         }
+
+
 
 
     }
