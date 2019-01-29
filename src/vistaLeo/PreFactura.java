@@ -25,10 +25,11 @@ public class PreFactura extends JFrame {
 
     private JTextField txtCodigo, txtOrigen, txtDestino, txtFechaSalida, txtHoraSalida, txtCosto, txtPlaca;
 
-    private JButton btn1, btn2, btn3;
+    private JButton btn1, btn2, btn3, btnVuelo;
 
     private ArrayList<String> stringsNombres;
     private Java2sAutoTextField txt1;
+    private List<ModeloCliente> modeloClienteList;
 
     public PreFactura(){
         ejecutar();
@@ -167,19 +168,24 @@ public class PreFactura extends JFrame {
         add(lbl7);
 
         btn1 = new JButton("Limpiar texto");
-        btn1.setSize(btn1.getPreferredSize());
+        btn1.setSize(200,25);
         btn1.setLocation(10, 675);
         add(btn1);
 
         btn2 = new JButton("Confirmar factura");
-        btn2.setSize(btn2.getPreferredSize());
+        btn2.setSize(200,25);
         btn2.setLocation(10, 705);
         add(btn2);
 
         btn3 = new JButton("Cancelar");
-        btn3.setSize(btn3.getPreferredSize());
+        btn3.setSize(200,25);
         btn3.setLocation(10, 735);
         add(btn3);
+
+        btnVuelo = new JButton("Listar Vuelos");
+        btnVuelo.setSize(200,25);
+        btnVuelo.setLocation(10, 765);
+        add(btnVuelo);
 
         txt2 = new JTextField();
         txt2.setSize(txtHoraSalida.getSize());
@@ -227,20 +233,46 @@ public class PreFactura extends JFrame {
 
             @Override
             public void run() {
-                txt1.setText("-");
+                txt1.setText("");
                 txt1.grabFocus();
                 txt1.requestFocus();
-                txt1.setText(txt1.getText());
+                txt1.setText("");
                 txt1.selectAll();
+                txt1.setStrict(false);
             }
         });
 
         txt1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println(e.getActionCommand());
+                boolean bandera = false;
 
+                for (int i = 0; i < modeloClienteList.size(); i++) {
+                    if (modeloClienteList.get(i).getNombre().equals(txt1.getText())) {
+                        txt1.setText(modeloClienteList.get(i).getNombre());
+                        txt2.setText(modeloClienteList.get(i).getDireccion());
+                        txt3.setText(modeloClienteList.get(i).getCedula());
+                        bandera = true;
+                        break;
+                    }
+                }
+                if(bandera == false)
+                    crearCliente();
             }
         });
+    }
+
+    public void crearCliente(){
+        int opcion = JOptionPane.showConfirmDialog(this, "El usuario ingresado no existe, \n desea crear uno nuevo?",
+                "Usuario inexistente", JOptionPane.YES_NO_OPTION);
+        CrearCliente crearCliente;
+        if(opcion==0) {
+            crearCliente = new CrearCliente();
+            dispose();
+        }else
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un usuario" +
+                    " para la prefactura");
     }
 
     public void llenarCombo(){
@@ -255,7 +287,7 @@ public class PreFactura extends JFrame {
     }
 
     public void obtenerClientes(){
-        List<ModeloCliente> modeloClienteList = new ArrayList<>();
+        modeloClienteList = new ArrayList<>();
         stringsNombres = new ArrayList<>();
 
 
@@ -265,10 +297,6 @@ public class PreFactura extends JFrame {
         for (int i = 0; i < modeloClienteList.size(); i++) {
             stringsNombres.add(modeloClienteList.get(i).getNombre());
         }
-
-
-
-
     }
 
 

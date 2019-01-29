@@ -17,6 +17,54 @@ public class SentenciasAgente {
     private ResultSet resultado = null;
     private PreparedStatement psentencia = null;
 
+    public void borrarCliente(ConexionAgente con, int id){
+        try{
+            String sentencia = "delete from age_clientes where cli_id = ?";
+            psentencia = con.getConnection().prepareStatement(sentencia);
+            psentencia.setInt(1, id);
+            psentencia.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void actualizarCliente(ConexionAgente con, int id, String nombre, String cedula, String direccion,
+                                  String fecha){
+        try{
+            String sentencia = "update age_clientes set cli_nom_completo = ?, cli_cedula = ?, cli_direccion = ?," +
+                    " fecha_nac = ? where cli_id = ?";
+            psentencia = con.getConnection().prepareStatement(sentencia);
+            psentencia.setString(1, nombre);
+            psentencia.setString(2, cedula);
+            psentencia.setString(3, direccion);
+            psentencia.setString(4, fecha);
+            psentencia.setInt(5, id);
+
+            psentencia.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void crearCliente(ConexionAgente con, String nombre, String cedula, String direccion, String fecha){
+        try{
+            String sentencia = "insert into age_clientes values(age_clientes_seq.nextval,?,?,?,?)";
+
+            psentencia = con.getConnection().prepareStatement(sentencia);
+            psentencia.setString(1, nombre);
+            psentencia.setString(2, cedula);
+            psentencia.setString(3, direccion);
+            psentencia.setString(4, fecha);
+
+            psentencia.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
     public List<ModeloCliente> clienteList(ConexionAgente con){
         List<ModeloCliente> clientes = new ArrayList<>();
         ModeloCliente modeloCliente = new ModeloCliente();

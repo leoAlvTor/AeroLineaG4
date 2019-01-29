@@ -16,6 +16,7 @@ public class BuscarVuelo extends JFrame implements ActionListener {
     private JButton btnRegresar, btnOtroVuelo;
     private JTable tablaVuelos;
     private String seleccion;
+    private boolean rol;        // En caso de que sea administrador |true| o agente |false|
 
     public BuscarVuelo(){
         ejecutar();

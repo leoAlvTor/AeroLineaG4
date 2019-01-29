@@ -4,6 +4,8 @@ import modelo.ModeloCliente;
 import modelo.ModeloEmpleado;
 import modelo.ModeloVuelos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,26 @@ public class GestionAeroLinea {
     private SentenciasAgente sentenciasAgente;
     private SentenciasAdministrador sentenciasAdministrador;
 
+    /*
+    |
+    |
+    |       METODOS DE COMPROBACION
+    |
+    |
+     */
+
+    public boolean validarFecha(String fecha){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        try{
+            dateFormat.parse(fecha.trim());
+
+        }catch (ParseException pe){
+            return false;
+        }
+        return true;
+    }
+
 
     /*
     |
@@ -24,6 +46,45 @@ public class GestionAeroLinea {
     |
     |
      */
+
+    public void borrarCliente(int id){
+        conexionAgente = new ConexionAgente();
+        conexionAgente.Conectar();
+
+        if(conexionAgente.getConnection()!=null) {
+            System.out.println("Conexion agente correcta (Borrado)");
+            sentenciasAgente = new SentenciasAgente();
+            sentenciasAgente.borrarCliente(conexionAgente, id);
+        }else
+            System.out.println("Error al conectar con agente (Borrado)");
+    }
+
+    public void actualizarCliente(int id, String nombre, String cedula, String direccion,
+                                  String fecha){
+        conexionAgente = new ConexionAgente();
+        conexionAgente.Conectar();
+
+        if(conexionAgente.getConnection()!=null){
+            System.out.println("Conexion agente correcta (Actualizacion)");
+            sentenciasAgente = new SentenciasAgente();
+            sentenciasAgente.actualizarCliente(conexionAgente, id, nombre, cedula, direccion, fecha);
+        }else
+            System.out.println("Error al conectar con agente (Actualizacion)");
+    }
+
+    public void crearCliente(String nombre, String cedula, String direccion, String fecha){
+        conexionAgente = new ConexionAgente();
+        conexionAgente.Conectar();
+
+        if(conexionAgente.getConnection()!= null){
+            System.out.println("Conexion agente de ventas correcta");
+            sentenciasAgente = new SentenciasAgente();
+            sentenciasAgente.crearCliente(conexionAgente, nombre, cedula, direccion, fecha);
+        }else
+            System.out.println("Error al conectar Agente de ventas");
+        conexionAgente.Desconectar();
+    }
+
 
     public List<ModeloCliente> clienteList(){
         List<ModeloCliente> modeloClientes = new ArrayList<>();
