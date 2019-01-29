@@ -223,7 +223,6 @@ public class Actualizar extends JFrame implements ActionListener{
                     int columna = 0;
                     String datos;
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna);
-                    System.out.println(datos);
 
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna);
                     txtId.setText(datos);

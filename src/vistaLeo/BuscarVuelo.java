@@ -5,6 +5,8 @@ import modelo.ModeloTablaVuelos;
 import modelo.ModeloVuelos;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +20,8 @@ public class BuscarVuelo extends JFrame implements ActionListener {
     private String seleccion;
     private boolean rol;        // En caso de que sea administrador |true| o agente |false|
 
-    public BuscarVuelo(){
+    public BuscarVuelo(boolean pRol){
+        rol = pRol;
         ejecutar();
     }
 
@@ -67,6 +70,55 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         add(btnRegresar);
 
         repaint();
+
+
+        if (rol == true){
+            PreFactura preFactura = new PreFactura();
+
+            tablaVuelos.setCellSelectionEnabled(true);
+            ListSelectionModel cellSelectionModel = tablaVuelos.getSelectionModel();
+            cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+            cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+
+                    if(!e.getValueIsAdjusting() && tablaVuelos.getSelectedRow()!= -1) {
+
+                        int fila = 0;
+                        fila = tablaVuelos.getSelectedRow();
+                        int columna = 0;
+                        String datos;
+                        datos = (String) tablaVuelos.getValueAt(fila, columna);
+                        System.out.println(datos);
+
+                        datos = (String) tablaVuelos.getValueAt(fila, columna);
+                        preFactura.txtCodigo.setText(datos);
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 1);
+                        preFactura.txt.setText(datos);
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 2);
+                        txtSalida.setText(datos);
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 3);
+                        txtLlegada.setText(datos);
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 4);
+                        txtTipo.setText(datos);
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 5);
+                        txtCosto.setText(datos);
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 6);
+                        comboAeroSalida.setSelectedIndex(Integer.parseInt(datos));
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 7);
+                        comboAeroLlegada.setSelectedIndex(Integer.parseInt(datos));
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 8);
+                        txtAvion.setText(datos);
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 9);
+                        txtFechaSalida.setText(datos);
+                        datos = (String) tablaVuelos.getValueAt(fila, columna + 10);
+                        txtFechaLlegada.setText(datos);
+                    }
+                }
+            });
+
+        }
     }
 
     public void llenarTabla(String destino){
