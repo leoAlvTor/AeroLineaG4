@@ -40,7 +40,8 @@ public class PreFactura extends JFrame {
         setLayout(null);
 
         init();
-
+        System.out.println("Leonardo");
+        System.out.println("jejeje");
     }
 
     public void init(){
