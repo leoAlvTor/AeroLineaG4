@@ -4,6 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * En esta clase se programo la conexion que la aplicacion tendra con la base de datos
+ * se especifica el usuario, la contraseña
+ * y la direccion de conexion
+ * para tener un codigo mas ordenado cada rol del usuario tendra su propia conexion a la base de datos
+ */
 public class ConexionAdministrador {
     private String usuario = "leo_proyecto";
     private String password = "leo";

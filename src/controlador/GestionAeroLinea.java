@@ -47,6 +47,11 @@ public class GestionAeroLinea {
     |
      */
 
+    /**
+     * para borrar a un cliente a este metodo se le pasa como parametro
+     * el id del cliente que se va a borrar
+     * @param id
+     */
     public void borrarCliente(int id){
         conexionAgente = new ConexionAgente();
         conexionAgente.Conectar();
@@ -59,6 +64,14 @@ public class GestionAeroLinea {
             System.out.println("Error al conectar con agente (Borrado)");
     }
 
+    /**
+     * Los parametros para la actualizacion seran los siguientes:
+     * @param id
+     * @param nombre
+     * @param cedula
+     * @param direccion
+     * @param fecha
+     */
     public void actualizarCliente(int id, String nombre, String cedula, String direccion,
                                   String fecha){
         conexionAgente = new ConexionAgente();
@@ -72,6 +85,13 @@ public class GestionAeroLinea {
             System.out.println("Error al conectar con agente (Actualizacion)");
     }
 
+    /**
+     * Este metodo registra a un nuevo cliente en la base de datos y recibira los siguientes para metros
+     * @param nombre
+     * @param cedula
+     * @param direccion
+     * @param fecha
+     */
     public void crearCliente(String nombre, String cedula, String direccion, String fecha){
         conexionAgente = new ConexionAgente();
         conexionAgente.Conectar();
@@ -85,7 +105,11 @@ public class GestionAeroLinea {
         conexionAgente.Desconectar();
     }
 
-
+    /**
+     * Metodo donde se otendra una lista de clientes es un metodo dinamico
+     * donde se hara uso en el momento de comparar los poles en la ventana de login
+     * @return
+     */
     public List<ModeloCliente> clienteList(){
         List<ModeloCliente> modeloClientes = new ArrayList<>();
         conexionAgente = new ConexionAgente();
@@ -113,7 +137,11 @@ public class GestionAeroLinea {
     |
      */
 
-
+    /**
+     * Este metodo eliminara el vuelo espacificado mediante id que corresopnde al destino que
+     * se selecciono el usuario por medio de la interfaz
+     * @param vuelo
+     */
     public void eliminarVuelos(String vuelo){
         int vueId = Integer.parseInt(vuelo);
         conexionAdministrador = new ConexionAdministrador();
@@ -127,6 +155,12 @@ public class GestionAeroLinea {
             System.out.println("Error al momento de conexion con la base de datos");
     }
 
+    /**
+     * En este metodo se obtiene de la base de datos los vuelos disponible especificando
+     * el destino donde el cliente desea viajar, este metodo retornara una lista de tipo vuelos
+     * @param destino
+     * @return
+     */
     public List<ModeloVuelos> listarVuelosPorDestino(String destino) {
         List<ModeloVuelos> datos = new ArrayList<>();
         conexionAdministrador = new ConexionAdministrador();
@@ -143,6 +177,22 @@ public class GestionAeroLinea {
         return datos;
     }
 
+    /**
+     * Este metodo actualizara los vuelos esta funcionalidad es llamada desde el interfaz de menu administrador
+     * ya que este tendra permisos para realizar esta actualizacion los parametros que reciben son los siguientes
+     * parametros
+     * @param id
+     * @param capacidad
+     * @param hSalida
+     * @param hLlegada
+     * @param tipo
+     * @param costo
+     * @param paeroSalida
+     * @param paeroLlegada
+     * @param avion
+     * @param fSalida
+     * @param fLlegada
+     */
     public void actualizarVuelos(String id, String capacidad, String hSalida,
                                  String hLlegada, String tipo, String costo, String paeroSalida, String paeroLlegada,
                                  String avion, String fSalida, String fLlegada) {
@@ -161,6 +211,17 @@ public class GestionAeroLinea {
 
     }
 
+    /**
+     * Metodo donde se realizara un regitro de usuario del sistema en este metodo se puede considerar que el atributo
+     * mas importante es el rol que desempeñara el nuevo usuario los parametros seran los siguientes
+     * @param pCedula
+     * @param pNombre
+     * @param pApellido
+     * @param pPassword
+     * @param pPregunta
+     * @param pRespuesta
+     * @param pRol
+     */
     public void crearUsuario(String pCedula, String pNombre, String pApellido,
                              String pPassword, String pPregunta, String pRespuesta, String pRol){
 
@@ -179,6 +240,11 @@ public class GestionAeroLinea {
 
     }
 
+    /**
+     * Metodo que obrendra de la base de datos los empleados que existen registrados en el sistema
+     * se retornara una lista de tipo empleado
+     * @return
+     */
     public List<ModeloEmpleado> obtenerEmpleados(){
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
         conexionAdministrador = new ConexionAdministrador();
@@ -196,6 +262,12 @@ public class GestionAeroLinea {
 
         return modeloEmpleadoList;
     }
+
+    /**
+     * Metodo que retornara una lista donde se especifican los destinos que el sistema tiene registrados en su base de
+     * datos
+     * @return
+     */
     public List<String> destinos(){
 
         List<String> datos = new ArrayList<>();
@@ -217,6 +289,14 @@ public class GestionAeroLinea {
         return datos;
     }
 
+    /**
+     * Este metodo realizara una conexion con la base de datos donde se obtendar las credenciales del usuario
+     * que haya ingresado en la funcionalidad de recuperar la contraseña los parametros de entrada seran:
+     * @param cedula
+     * @param pregunta
+     * @param respuesta
+     * @return
+     */
     public List<String> recuperarPassword(String cedula, String pregunta, String respuesta){
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
         List<String> datos = new ArrayList<>();
