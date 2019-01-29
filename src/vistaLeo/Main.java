@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] leo){
 
         //Eliminar eliminar = new Eliminar();
-
+/*
         System.out.println();
         LogIn logIn = new LogIn();
         logIn.init();
@@ -33,8 +33,8 @@ public class Main {
         menu.setSize(500,500);
         menu.ejectuar();
 */
-       // PreFactura preFactura = new PreFactura();
-
+        PreFactura preFactura = new PreFactura();
+/*
 
         //VuelosVendidos vuelosVendidos = new VuelosVendidos();
 
@@ -48,6 +48,6 @@ public class Main {
         int b = calendar.get(Calendar.MONTH);
         int c = calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(a + " mes: " + b + " dia: "+ c);
-
+*/
     }
 }

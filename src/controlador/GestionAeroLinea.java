@@ -1,5 +1,6 @@
 package controlador;
 
+import modelo.ModeloCliente;
 import modelo.ModeloEmpleado;
 import modelo.ModeloVuelos;
 
@@ -14,6 +15,34 @@ public class GestionAeroLinea {
 
     private SentenciasAgente sentenciasAgente;
     private SentenciasAdministrador sentenciasAdministrador;
+
+
+    /*
+    |
+    |
+    |   Empieza todas las sentencias del Agente de ventas
+    |
+    |
+     */
+
+    public List<ModeloCliente> clienteList(){
+        List<ModeloCliente> modeloClientes = new ArrayList<>();
+        conexionAgente = new ConexionAgente();
+        conexionAgente.Conectar();
+
+        if(conexionAgente.getConnection()!= null){
+            System.out.println("Conexion agente de ventas correcta");
+            sentenciasAgente = new SentenciasAgente();
+            modeloClientes = sentenciasAgente.clienteList(conexionAgente);
+        }else{
+            System.out.println("Error al conectar Agente de ventas");
+        }
+        conexionAgente.Desconectar();
+
+        return modeloClientes;
+
+    }
+
 
     /*
     |

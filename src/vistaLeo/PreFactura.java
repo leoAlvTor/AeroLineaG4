@@ -1,9 +1,13 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
+import modelo.Java2sAutoTextField;
+import modelo.ModeloCliente;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class PreFactura extends JFrame {
@@ -20,6 +24,9 @@ public class PreFactura extends JFrame {
     private JTextField txtCodigo, txtOrigen, txtDestino, txtFechaSalida, txtHoraSalida, txtCosto, txtPlaca;
 
     private JButton btn1, btn2, btn3;
+
+    private ArrayList<String> stringsNombres;
+    private Java2sAutoTextField txt;
 
     public PreFactura(){
         ejecutar();
@@ -41,6 +48,7 @@ public class PreFactura extends JFrame {
 
         txt1 = new JTextField();
         txt1.setSize(175,25);
+        txt1.setText("HOLAAAAAAAAAAAAAAAA");
         txt1.setLocation(160,155);
         add(txt1);
 
@@ -211,6 +219,8 @@ public class PreFactura extends JFrame {
 
 
         repaint();
+
+        obtenerClientes();
     }
 
     public void llenarCombo(){
@@ -222,6 +232,21 @@ public class PreFactura extends JFrame {
         comboTipoPersona.setSize(174,25);
         comboTipoPersona.setLocation(160,485);
         add(comboTipoPersona);
+    }
+
+    public void obtenerClientes(){
+        List<ModeloCliente> modeloClienteList = new ArrayList<>();
+        stringsNombres = new ArrayList<>();
+
+
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        modeloClienteList = gestionAeroLinea.clienteList();
+
+        for (int i = 0; i < modeloClienteList.size(); i++) {
+            stringsNombres.add(modeloClienteList.get(i).getNombre());
+        }
+
+
     }
 
 

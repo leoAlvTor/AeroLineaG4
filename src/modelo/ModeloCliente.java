@@ -1,21 +1,40 @@
 package modelo;
 
-public class ModeloCliente extends ModeloPersona{
-    private String direccion;
-    private String nombreCompleto;
+public class ModeloCliente{
+    private String id, nombre, cedula, direccion, fecha_nac;
 
     public ModeloCliente(){}
 
-    public ModeloCliente(String direccion, String nombreCompleto) {
+    public ModeloCliente(String id, String nombre, String cedula, String direccion, String fecha_nac) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cedula = cedula;
         this.direccion = direccion;
-        this.nombreCompleto = nombreCompleto;
+        this.fecha_nac = fecha_nac;
     }
 
-    public ModeloCliente(int codigo, String nombre, String apellido, String cedula, String fecha_nac, String direccion,
-                         String nombreCompleto) {
-        super(codigo, nombre, apellido, cedula, fecha_nac);
-        this.direccion = direccion;
-        this.nombreCompleto = nombreCompleto;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getDireccion() {
@@ -26,19 +45,24 @@ public class ModeloCliente extends ModeloPersona{
         this.direccion = direccion;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getFecha_nac() {
+        return fecha_nac;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setFecha_nac(String fecha_nac) {
+        this.fecha_nac = fecha_nac;
     }
 
     @Override
     public String toString() {
         return "ModeloCliente{" +
-                "direccion='" + direccion + '\'' +
-                ", nombreCompleto='" + nombreCompleto + '\'' +
+                "id='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", cedula='" + cedula + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", fecha_nac='" + fecha_nac + '\'' +
                 '}';
     }
+
+
 }

@@ -104,7 +104,19 @@ public class MenuAgente extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        Object event = e.getSource();
+        JLabel label = (JLabel) event;
 
+        if(label == lblAyuda)
+            System.out.println("auxilio");
+        else if (label == lblComprar)
+            System.out.println("Compras");
+        else if (label == lblMostrar)
+            System.out.println("Mostrar vuelos");
+        else if(label == lblReporte)
+            System.out.println("Reporte de ventas");
+        else if(label == lblSalir)
+            System.out.println("Log out");
     }
 
     @Override
