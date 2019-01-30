@@ -13,6 +13,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class GestionAeroLinea {
     public GestionAeroLinea(){}
 
@@ -30,19 +31,32 @@ public class GestionAeroLinea {
     |
      */
 
+
+
     public int tipoPasajero(String fechaAct, String fechaNac){
+        int years = 0;
         try {
             Date fechaActual = new SimpleDateFormat("dd/MM/yyyy").parse(fechaAct);
             Date fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNac);
 
             long diferencia = fechaActual.getTime() - fechaNacimiento.getTime();
-            int dias = (int) (diferencia/(24*60*60*1000));
-            System.out.println("Cantidad de dias transcurridos: "+ dias);
+            years = (int) ((diferencia/(24*60*60*1000))/365);
+            System.out.println("Cantidad de dias transcurridos: "+ years);
         }catch (Exception e) {
             e.printStackTrace();
 
         }
-        return 1;
+
+        if(years  <= 2){
+            return 1;
+        }else if(years >= 65){
+            return 2;
+        }else if(years > 2 && years < 18){
+            return 3;
+        }else if(years >=18 && years < 65) {
+            return 4;
+        }
+        return years;
     }
 
     public boolean validarFecha(String fecha){
@@ -56,7 +70,6 @@ public class GestionAeroLinea {
         }
         return true;
     }
-
 
     /*
     |

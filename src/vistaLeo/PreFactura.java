@@ -72,7 +72,7 @@ public class PreFactura extends JFrame implements  ActionListener{
                 btnVueloDestino.requestFocus();
                 gestionAeroLinea = new GestionAeroLinea();
                 tipoPasajero = gestionAeroLinea.tipoPasajero(txtFecha.getText(), fechaNac);
-
+                determinarPasajero(tipoPasajero);
             }
         });
         pnl1.add(txtAutoComplete);
@@ -87,6 +87,7 @@ public class PreFactura extends JFrame implements  ActionListener{
         pnl1.add(lbl4);
         comboTipoPersona = new JComboBox();
         pnl1.add(comboTipoPersona);
+        cargarTiposP();
 
         lbl5 = new JLabel("Asientos disponibles:");
         pnl1.add(lbl5);
@@ -162,7 +163,15 @@ public class PreFactura extends JFrame implements  ActionListener{
         });
 
 
+    }
 
+    public void cargarTiposP(){
+        comboTipoPersona.addItem("Seleccione un campo");
+        comboTipoPersona.addItem("Bebe");
+        comboTipoPersona.addItem("Adulto Mayor");
+        comboTipoPersona.addItem("Joven < 18");
+        comboTipoPersona.addItem("Adulto");
+        comboTipoPersona.addItem("Discapacitado");
 
     }
 
@@ -190,9 +199,10 @@ public class PreFactura extends JFrame implements  ActionListener{
             int i = JOptionPane.showConfirmDialog(this, "Al parecer la cedula ingresada no existe,\n" +
                     "Desea crear un nuevo usuario?", "Usuario inexistente",
                     JOptionPane.YES_NO_OPTION );
-            if(i == 0 )
+            if(i == 0 ) {
                 crearCliente = new CrearCliente();
-            else
+                dispose();
+            }else
                 JOptionPane.showMessageDialog(this, "No se creara el usuario");
         }
     }
@@ -318,11 +328,25 @@ public class PreFactura extends JFrame implements  ActionListener{
     }
 
     public void cargarAsientos(){
+
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
         List<String> asientosDisponibles = gestionAeroLinea.asientosDisponibles(codigoVuelo);
         comboAsientos.removeAllItems();
         for (int i = 0; i < asientosDisponibles.size(); i++) {
             comboAsientos.addItem(asientosDisponibles.get(i));
         }
+    }
+
+    public void determinarPasajero(int tipo){
+        if(tipo == 1)
+            comboTipoPersona.setSelectedIndex(1);
+        else if (tipo == 2)
+            comboTipoPersona.setSelectedIndex(2);
+        else if (tipo == 3)
+            comboTipoPersona.setSelectedIndex(3);
+        else if (tipo == 4)
+            comboTipoPersona.setSelectedIndex(4);
+        else
+            comboTipoPersona.setSelectedIndex(5);
     }
 }

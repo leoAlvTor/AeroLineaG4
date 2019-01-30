@@ -1,11 +1,8 @@
 package controlador;
 
 import modelo.ModeloCliente;
-import modelo.ModeloVuelos;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +13,28 @@ public class SentenciasAgente {
 
     private ResultSet resultado = null;
     private PreparedStatement psentencia = null;
+
+    private CallableStatement cStmt = null;
+    private Connection conn = null;
+
+    private void insertarCabeceraDetalle(ConexionAgente con, String fecha, double costo, int cliente, int empleado,
+                                         String asiento, String tipoPasajero, int codigoVuelos){
+        con = new ConexionAgente();
+        try {
+            cStmt = con.getConnection().prepareCall("{call p_insertar_cabecera(?,?,?,?,?,?,?)}");
+            cStmt.setString(1, fecha);
+            cStmt.setDouble(2, costo);
+            cStmt.setInt(3, cliente);
+            cStmt.setInt(4, empleado);
+            cStmt.setString(5, asiento);
+            cStmt.setString(6, tipoPasajero);
+            cStmt.setInt(7, codigoVuelos);
+            cStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        con.Desconectar();
+    }
 
     public List<String> asientosDisponibles(ConexionAgente con, int avi_id){
         List<String> asientos = new ArrayList<>();

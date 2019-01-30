@@ -161,6 +161,8 @@ public class CrearCliente extends JFrame implements ActionListener {
         if(bandera == false) {
             JOptionPane.showMessageDialog(this, "La fecha ingresada es incorrecta," +
                     " por favor revise el ingreso");
+            txtFecha.setText("");
+            txtFecha.grabFocus();
             txtFecha.requestFocus();
         }else{
             GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
