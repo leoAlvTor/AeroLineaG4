@@ -4,10 +4,14 @@ import modelo.ModeloCliente;
 import modelo.ModeloEmpleado;
 import modelo.ModeloVuelos;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GestionAeroLinea {
     public GestionAeroLinea(){}
@@ -25,6 +29,21 @@ public class GestionAeroLinea {
     |
     |
      */
+
+    public int tipoPasajero(String fechaAct, String fechaNac){
+        try {
+            Date fechaActual = new SimpleDateFormat("dd/MM/yyyy").parse(fechaAct);
+            Date fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNac);
+
+            long diferencia = fechaActual.getTime() - fechaNacimiento.getTime();
+            int dias = (int) (diferencia/(24*60*60*1000));
+            System.out.println("Cantidad de dias transcurridos: "+ dias);
+        }catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return 1;
+    }
 
     public boolean validarFecha(String fecha){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -47,6 +66,21 @@ public class GestionAeroLinea {
     |
      */
 
+    public List<String> asientosDisponibles(int idVuelo){
+        conexionAgente = new ConexionAgente();
+        conexionAgente.Conectar();
+        List<String> asientos = new ArrayList<>();
+
+        if(conexionAgente.getConnection() != null){
+            System.out.println("Conexion agente correcta (Asientos disponibles)");
+            sentenciasAgente = new SentenciasAgente();
+           asientos = sentenciasAgente.asientosDisponibles(conexionAgente, idVuelo);
+        }else
+            System.out.println("Error al conectar con agente (Asientos disponibles)");
+        conexionAgente.Desconectar();
+        return asientos;
+    }
+
     public void borrarCliente(int id){
         conexionAgente = new ConexionAgente();
         conexionAgente.Conectar();
@@ -57,6 +91,7 @@ public class GestionAeroLinea {
             sentenciasAgente.borrarCliente(conexionAgente, id);
         }else
             System.out.println("Error al conectar con agente (Borrado)");
+        conexionAgente.Desconectar();
     }
 
     public void actualizarCliente(int id, String nombre, String cedula, String direccion,
@@ -70,6 +105,7 @@ public class GestionAeroLinea {
             sentenciasAgente.actualizarCliente(conexionAgente, id, nombre, cedula, direccion, fecha);
         }else
             System.out.println("Error al conectar con agente (Actualizacion)");
+        conexionAgente.Desconectar();
     }
 
     public void crearCliente(String nombre, String cedula, String direccion, String fecha){

@@ -30,6 +30,8 @@ public class PreFactura extends JFrame implements  ActionListener{
     private JScrollPane scrollPane;
 
     int codigoVuelo;
+    String fechaNac;
+    int tipoPasajero;
 
     private ArrayList<String> stringsCedulas;
     private Java2sAutoTextField txtAutoComplete;
@@ -68,6 +70,9 @@ public class PreFactura extends JFrame implements  ActionListener{
             public void actionPerformed(ActionEvent e) {
                 cargarDatosUsuario(txtAutoComplete.getText());
                 btnVueloDestino.requestFocus();
+                gestionAeroLinea = new GestionAeroLinea();
+                tipoPasajero = gestionAeroLinea.tipoPasajero(txtFecha.getText(), fechaNac);
+
             }
         });
         pnl1.add(txtAutoComplete);
@@ -175,9 +180,10 @@ public class PreFactura extends JFrame implements  ActionListener{
     public void cargarDatosUsuario(String cedula){
         boolean bandera = false;
         for (int i = 0; i < modeloClienteList.size(); i++)
-            if(modeloClienteList.get(i).getCedula().equals(cedula))
+            if(modeloClienteList.get(i).getCedula().equals(cedula)) {
                 bandera = true;
-
+                fechaNac = modeloClienteList.get(i).getFecha_nac();
+            }
             CrearCliente crearCliente;
 
         if(bandera == false){
@@ -263,9 +269,9 @@ public class PreFactura extends JFrame implements  ActionListener{
                     fila = tablaVuelos.getSelectedRow();
                     int columna = 0;
                     String datos="";
-                    datos = (String) tablaVuelos.getValueAt(fila, columna);
+                    datos = (String) tablaVuelos.getValueAt(fila, columna + 8);
                     codigoVuelo = Integer.parseInt(datos);
-                    datos = (String) tablaVuelos.getValueAt(fila, columna+5);
+                    datos = (String) tablaVuelos.getValueAt(fila, columna + 5);
                     txtPrecio.setText(datos);
                     datos = (String) tablaVuelos.getValueAt(fila, columna + 6);
                     txtOrigen.setText(datos);
@@ -275,6 +281,7 @@ public class PreFactura extends JFrame implements  ActionListener{
                     txtFechaS.setText(datos);
                     datos = (String) tablaVuelos.getValueAt(fila, columna + 10);
                     txtFechaL.setText(datos);
+                    cargarAsientos();
                 }
             }
         });
@@ -308,5 +315,14 @@ public class PreFactura extends JFrame implements  ActionListener{
         txtDestino.setText("");
         txtFechaS.setText("");
         txtFechaL.setText("");
+    }
+
+    public void cargarAsientos(){
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        List<String> asientosDisponibles = gestionAeroLinea.asientosDisponibles(codigoVuelo);
+        comboAsientos.removeAllItems();
+        for (int i = 0; i < asientosDisponibles.size(); i++) {
+            comboAsientos.addItem(asientosDisponibles.get(i));
+        }
     }
 }

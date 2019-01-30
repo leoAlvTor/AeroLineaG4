@@ -17,6 +17,27 @@ public class SentenciasAgente {
     private ResultSet resultado = null;
     private PreparedStatement psentencia = null;
 
+    public List<String> asientosDisponibles(ConexionAgente con, int avi_id){
+        List<String> asientos = new ArrayList<>();
+        try{
+            String sentencia = "Select * from age_asientos " +
+                    "where age_asientos.age_avion_avi_id = ? and asi_disponible = 'D'";
+            psentencia = con.getConnection().prepareStatement(sentencia);
+            psentencia.setInt(1,avi_id);
+            System.out.println("Id del avion: "+ avi_id);
+            resultado = psentencia.executeQuery();
+            while(resultado.next()){
+                String leo = resultado.getString("asi_loc");
+                System.out.println(leo);
+                asientos.add(leo);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return asientos;
+    }
+
     public void borrarCliente(ConexionAgente con, int id){
         try{
             String sentencia = "delete from age_clientes where cli_id = ?";
