@@ -33,14 +33,23 @@ public class GestionAeroLinea {
      */
 
 
-    public int comprobarTarjeta(BigInteger numero){
+    public int comprobarTarjeta(BigInteger numero) {
         String cmp = String.valueOf(numero);
 
-        if(cmp.startsWith("3")){
+        if (cmp.startsWith("3")) {
+            return 4;
+        } else if (cmp.startsWith("4")) {
+            if (cmp.charAt(1) == '0' || cmp.charAt(1) == '1' || cmp.charAt(1) == '4' || cmp.charAt(1) == '5'
+                    || cmp.charAt(1) == '8' && cmp.length() == 16)
+                return 1;
+        } else if (cmp.length() == 13 && cmp.length() == 19){
+            return 11;
+        }else if(cmp.startsWith("5")) {
+            return 2;
+        }else if(cmp.startsWith("6")) {
             return 3;
-        }else if(cmp.startsWith("4"))
-            if(cmp.)
-
+        }
+        return 0;
     }
 
     public int tipoPasajero(String fechaAct, String fechaNac){
