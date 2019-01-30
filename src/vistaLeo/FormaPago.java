@@ -65,9 +65,8 @@ public class FormaPago extends JFrame{
     public void determinarTarjeta(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
 
+        int b = gestionAeroLinea.comprobarTarjeta(BigInteger.valueOf(Long.parseLong(txtForma.getText())));
 
-        if(gestionAeroLinea.comprobarTarjeta(BigInteger.valueOf(Long.parseLong(txtForma.getText()))) == 1)
-            System.out.println("Parace que visa :v");
 
     }
 
