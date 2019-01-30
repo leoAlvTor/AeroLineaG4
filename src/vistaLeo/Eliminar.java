@@ -1,6 +1,7 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
+import modelo.ModeloTablaKardex;
 import modelo.ModeloTablaVuelos;
 import modelo.ModeloVuelos;
 
@@ -62,7 +63,7 @@ public class Eliminar extends JFrame implements ActionListener {
            pnlSur.add(btnSalir);
 
            tablaVuelos = new JTable();
-           tablaVuelos.setModel(new ModeloTablaVuelos());
+           tablaVuelos.setModel(new ModeloTablaKardex());
            scrollPane = new JScrollPane(tablaVuelos);
 
            pnlPrincipal.add(scrollPane, BorderLayout.CENTER);

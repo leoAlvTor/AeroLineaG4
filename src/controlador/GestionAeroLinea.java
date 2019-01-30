@@ -2,6 +2,7 @@ package controlador;
 
 import modelo.ModeloCliente;
 import modelo.ModeloEmpleado;
+import modelo.ModeloKardex;
 import modelo.ModeloVuelos;
 
 import java.text.ParseException;
@@ -174,6 +175,60 @@ public class GestionAeroLinea {
             System.out.println("Conexion amdinistrador incorrecta");
         }
         conexionAdministrador.Desconectar();
+        return datos;
+    }
+
+    public List<ModeloKardex> listarKardex(String destino) {
+
+        List<ModeloKardex> datos = new ArrayList<>();
+
+
+        /*
+        conexionAdministrador = new ConexionAdministrador();
+        conexionAdministrador.Conectar();
+
+        if(conexionAdministrador.getConnection()!= null){
+            System.out.println("Conexion administrador correcta");
+            sentenciasAdministrador = new SentenciasAdministrador();
+            datos = sentenciasAdministrador.listarVuelosPorDestino(conexionAdministrador, destino);
+        }else{
+            System.out.println("Conexion amdinistrador incorrecta");
+        }
+        conexionAdministrador.Desconectar();
+        */
+
+        ModeloKardex k=new ModeloKardex();
+        k.setFecha("12-21-1999");
+        k.setDetalle("lorena");
+        k.setE_cantidad("aiubvasdkn");
+
+        ModeloKardex k1=new ModeloKardex();
+        k1.setFecha("10-09-1200");
+        k1.setDetalle("natalia");
+        k1.setE_cantidad("KDUJFB");
+
+        ModeloKardex k2=new ModeloKardex();
+        k2.setFecha("21-02-2010");
+        k2.setDetalle("POLITA");
+        k2.setE_cantidad("EOA FHN");
+
+        ModeloKardex k3=new ModeloKardex();
+        k3.setFecha("21-12-2009");
+        k3.setDetalle("ESTEBAN");
+        k3.setE_cantidad("NNWEB234");
+
+        ModeloKardex k4=new ModeloKardex();
+        k4.setFecha("12-21-1278");
+        k4.setDetalle("PEDRO Y LORENA ");
+        k4.setE_cantidad("Q48TQHW");
+
+        datos.add(k);
+        datos.add(k1);
+        datos.add(k2);
+        datos.add(k3);
+        datos.add(k3);
+        datos.add(k4);
+
         return datos;
     }
 

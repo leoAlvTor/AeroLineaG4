@@ -1,6 +1,7 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
+import modelo.ModeloTablaKardex;
 import modelo.ModeloTablaVuelos;
 import modelo.ModeloVuelos;
 
@@ -134,7 +135,7 @@ public class Actualizar extends JFrame implements ActionListener{
         pnlLbl.setBorder(border1);
 
         tableMiniVuelos = new JTable();
-        tableMiniVuelos.setModel(new ModeloTablaVuelos());
+        tableMiniVuelos.setModel(new ModeloTablaKardex());
         scrollPane = new JScrollPane(tableMiniVuelos);
         scrollPane.setBorder(border1);
 

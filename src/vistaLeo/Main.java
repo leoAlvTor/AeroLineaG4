@@ -33,7 +33,9 @@ public class Main {
         menu.setSize(500,500);
         menu.ejectuar();
 */
-        PreFactura preFactura = new PreFactura();
+        //PreFactura preFactura = new PreFactura();
+
+        Kardex vent=new Kardex();
 /*
 
         //VuelosVendidos vuelosVendidos = new VuelosVendidos();

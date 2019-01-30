@@ -1,9 +1,9 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
+import modelo.ModeloKardex;
 import modelo.ModeloTablaKardex;
-import modelo.ModeloTablaVuelos;
-import modelo.ModeloVuelos;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,20 +12,23 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuscarVuelo extends JFrame implements ActionListener {
+public class Kardex extends JFrame implements ActionListener {
+
+    private JTable tablaKardex;
+    private String seleccion;
 
     private JButton btnRegresar, btnOtroVuelo;
-    private JTable tablaVuelos;
-    private String seleccion;
+
+
     private boolean rol;        // En caso de que sea administrador |true| o agente |false|
 
-    public BuscarVuelo(){
+    public Kardex(){
         ejecutar();
     }
 
     public void ejecutar(){
         setLayout(null);
-        setTitle("Listado de vuelos por destino");
+        setTitle("Kardex Producto");
         setVisible(true);
         setSize(1100,650);
 
@@ -39,19 +42,20 @@ public class BuscarVuelo extends JFrame implements ActionListener {
 
         init();
 
-        mostrarVuelos();
+        mostrarInfoKardex();
 
     }
 
     public void init(){
-        tablaVuelos = new JTable();
-        tablaVuelos.setModel(new ModeloTablaKardex());
+        tablaKardex = new JTable();
+        tablaKardex.setModel(new ModeloTablaKardex());
 
-        JScrollPane jScrollPane = new JScrollPane(tablaVuelos);
+        JScrollPane jScrollPane = new JScrollPane(tablaKardex);
         jScrollPane.setSize(1080, 500);
         jScrollPane.setLocation(10, 10);
 
         add(jScrollPane);
+
 
         btnOtroVuelo = new JButton("Mostrar destinos disponibles");
         btnOtroVuelo.setActionCommand("mostrar");
@@ -67,17 +71,19 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         btnRegresar.setLocation(550, 550);
         add(btnRegresar);
 
+
         repaint();
     }
 
     public void llenarTabla(String destino){
-        List<ModeloVuelos> modeloTablaVuelos;
+        List<ModeloKardex> modeloTablaKardex;
 
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
-        modeloTablaVuelos = gestionAeroLinea.listarVuelosPorDestino(destino);
+        modeloTablaKardex = gestionAeroLinea.listarKardex(destino);//ATENTO AQUI PUEDE IR PARAMETROS
 
-        tablaVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
+        tablaKardex.setModel(new ModeloTablaKardex(modeloTablaKardex));
     }
+
 
     public void regresarMenu(){
         dispose();
@@ -86,11 +92,15 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         menuAdministrador.ejecutar();
     }
 
-    public void mostrarVuelos(){
+
+    /**
+     * obtener informacion de la base de datos
+     */
+    public void mostrarInfoKardex(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
         List<String> lista= new ArrayList<>();
+        //Extraemos la informacion del kardex del la base de datos  en funcion de los destinos
         lista = gestionAeroLinea.destinos();
-
 
         String[] destinos = new String[lista.size()];
 
@@ -98,9 +108,10 @@ public class BuscarVuelo extends JFrame implements ActionListener {
             destinos[i] = lista.get(i);
         }
 
+
         seleccion = (String) JOptionPane.showInputDialog(this,
-                "Cual es el destino deseado?",
-                "Destinos disponibles",
+                "Seleccione el destino para conocer su kardex?",
+                "Ingrese el destino",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 destinos,
@@ -114,7 +125,7 @@ public class BuscarVuelo extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("mostrar"))
-            mostrarVuelos();
+            mostrarInfoKardex();
         else if(e.getActionCommand().equals("salir"))
             regresarMenu();
     }
