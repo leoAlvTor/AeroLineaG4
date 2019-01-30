@@ -10,25 +10,25 @@ public class MenuAgente extends JFrame implements MouseListener {
     private JLabel lblMostrar, lblComprar, lblReporte, lblSalir, lblAyuda;
     private JLabel txtMostrar, txtComprar, txtReporte, txtSalir, txtAyuda;
 
-    public void ejectuar(){
+    public void ejectuar() {
         pack();
         componentes();
         init();
-        setSize(500,500);
+        setSize(500, 500);
     }
 
-    public void init(){
+    public void init() {
         getContentPane().setBackground(Color.WHITE);
         setVisible(true);
         setTitle("Menu Agente");
         setLayout(null);
 
-        lblMostrar.setSize(130,100);
+        lblMostrar.setSize(130, 100);
         lblMostrar.setLocation(65, 30);
         add(lblMostrar);
 
         txtMostrar.setSize(txtMostrar.getPreferredSize());
-        txtMostrar.setLocation(60,140);
+        txtMostrar.setLocation(60, 140);
         add(txtMostrar);
 
         lblComprar.setSize(lblComprar.getPreferredSize());
@@ -40,15 +40,15 @@ public class MenuAgente extends JFrame implements MouseListener {
         add(txtComprar);
 
         lblAyuda.setSize(lblComprar.getPreferredSize());
-        lblAyuda.setLocation(215,180);
+        lblAyuda.setLocation(215, 180);
         add(lblAyuda);
 
         txtAyuda.setSize(txtAyuda.getPreferredSize());
-        txtAyuda.setLocation(235,280);
+        txtAyuda.setLocation(235, 280);
         add(txtAyuda);
 
         lblReporte.setSize(lblReporte.getPreferredSize());
-        lblReporte.setLocation(50,270);
+        lblReporte.setLocation(50, 270);
         add(lblReporte);
 
         txtReporte.setSize(txtReporte.getPreferredSize());
@@ -60,11 +60,11 @@ public class MenuAgente extends JFrame implements MouseListener {
         add(lblSalir);
 
         txtSalir.setSize(txtSalir.getPreferredSize());
-        txtSalir.setLocation(385,370);
+        txtSalir.setLocation(385, 370);
         add(txtSalir);
     }
 
-    public void componentes(){
+    public void componentes() {
         lblMostrar = new JLabel();
         lblMostrar.setIcon(new ImageIcon(this.getClass().getResource("Imagenes/Mostrar.png")));
         lblMostrar.addMouseListener(this);
@@ -102,21 +102,36 @@ public class MenuAgente extends JFrame implements MouseListener {
 
     }
 
+    public void logOut() {
+        LogIn logIn = new LogIn();
+        logIn.init();
+        logIn.setSize(300, 350);
+        logIn.setLocation(870, 270);
+        dispose();
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
+        PreFactura preFactura;
+        BuscarVuelo buscarVuelo;
+
         Object event = e.getSource();
         JLabel label = (JLabel) event;
 
-        if(label == lblAyuda)
+        if (label == lblAyuda)
             System.out.println("auxilio");
-        else if (label == lblComprar)
-            System.out.println("Compras");
-        else if (label == lblMostrar)
-            System.out.println("Mostrar vuelos");
-        else if(label == lblReporte)
+        else if (label == lblComprar) {
+            preFactura = new PreFactura();
+            dispose();
+        } else if (label == lblMostrar){
+            dispose();
+            buscarVuelo = new BuscarVuelo(false);
+        }else if(label ==lblReporte){
             System.out.println("Reporte de ventas");
-        else if(label == lblSalir)
-            System.out.println("Log out");
+        }else if(label == lblSalir) {
+            logOut();
+            dispose();
+        }
     }
 
     @Override

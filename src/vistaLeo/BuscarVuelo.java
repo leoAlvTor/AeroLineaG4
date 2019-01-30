@@ -72,7 +72,7 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         repaint();
 
 
-        if (rol == true){
+        if (rol == false){
             PreFactura preFactura = new PreFactura();
         }
     }
@@ -86,11 +86,18 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         tablaVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
     }
 
-    public void regresarMenu(){
+    public void regresarAdministrador(){
         dispose();
         MenuAdministrador menuAdministrador = new MenuAdministrador();
         menuAdministrador.setSize(600,500);
         menuAdministrador.ejecutar();
+    }
+
+    public void regresarMenuAgente(){
+        MenuAgente menu = new MenuAgente();
+        menu.setSize(500,500);
+        menu.ejectuar();
+        dispose();
     }
 
     public void mostrarVuelos(){
@@ -118,11 +125,19 @@ public class BuscarVuelo extends JFrame implements ActionListener {
     }
 
 
+    public void determinarRegreso(){
+            if(rol == false){
+                regresarMenuAgente();
+            }else if(rol == true){
+                regresarAdministrador();
+            }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("mostrar"))
             mostrarVuelos();
         else if(e.getActionCommand().equals("salir"))
-            regresarMenu();
+            determinarRegreso();
     }
 }

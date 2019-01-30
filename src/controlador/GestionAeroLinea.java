@@ -4,6 +4,7 @@ import modelo.ModeloCliente;
 import modelo.ModeloEmpleado;
 import modelo.ModeloVuelos;
 
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,15 @@ public class GestionAeroLinea {
      */
 
 
+    public int comprobarTarjeta(BigInteger numero){
+        String cmp = String.valueOf(numero);
+
+        if(cmp.startsWith("3")){
+            return 3;
+        }else if(cmp.startsWith("4"))
+            if(cmp.)
+
+    }
 
     public int tipoPasajero(String fechaAct, String fechaNac){
         int years = 0;

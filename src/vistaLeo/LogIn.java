@@ -31,7 +31,7 @@ public class LogIn extends JFrame implements ActionListener {
 
 
     public void init(){
-        setTitle("leo In");
+        setTitle("On Board");
         componentes();
         setLayout(null);
 

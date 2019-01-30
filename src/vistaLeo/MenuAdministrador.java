@@ -108,11 +108,10 @@ public class MenuAdministrador extends JFrame implements MouseListener {
 
     public void llamarBuscarVuelos(){
         dispose();
-        BuscarVuelo buscarVuelo = new BuscarVuelo(false);
+        BuscarVuelo buscarVuelo = new BuscarVuelo(true);
     }
 
     public void logOut(){
-        System.out.println();
         LogIn logIn = new LogIn();
         logIn.init();
         logIn.setSize(300,350);
@@ -126,6 +125,8 @@ public class MenuAdministrador extends JFrame implements MouseListener {
         JLabel label = (JLabel) event;
         Actualizar actualizar;
         Eliminar eliminar;
+
+
         if(label == lblBuscar)
             llamarBuscarVuelos();
         else if(label == lblActualizar) {
