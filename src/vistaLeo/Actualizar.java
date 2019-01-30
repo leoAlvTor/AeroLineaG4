@@ -273,6 +273,10 @@ public class Actualizar extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Este metodo hara uso otro metodo de la clase GestionAeroLinea el metodo se llama .destinos() y retorna una lista
+     * de destinos la cual va a ser cargada en el comboBox comboAeroSalida y comboAeroLlegada
+     */
     public void cargarDestinos(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
         List<String> listaDestinos = new ArrayList<>();
@@ -285,6 +289,10 @@ public class Actualizar extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * metodo que sera llamado desde un evento boton el cual vaciara la informacion ingresada en los campos de la
+     * interfaz
+     */
     public void cancelar(){
         txtFechaLlegada.setText("");
         txtFechaSalida.setText("");
@@ -296,7 +304,7 @@ public class Actualizar extends JFrame implements ActionListener{
         txtCapacidad.setText("");
         txtId.setText("");
     }
-
+    //metodo llamado desde un boton el cual regresara al menu administrador
     public void vtnAdministrador(){
         MenuAdministrador menuAdministrador = new MenuAdministrador();
         menuAdministrador.setSize(600,500);
@@ -305,6 +313,7 @@ public class Actualizar extends JFrame implements ActionListener{
     }
 
     @Override
+    //Metodo escucha de las pulsaciones del los botones de la interfaz
     public void actionPerformed(ActionEvent e) {
         String accion = e.getActionCommand();
 

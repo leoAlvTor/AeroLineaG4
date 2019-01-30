@@ -11,10 +11,10 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class PreFactura extends JFrame {
 
     GestionAeroLinea gestionAeroLinea;
+    //
     private JLabel lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lblImagen;
 
     private JLabel lblCodigo, lblOrigen, lblDestino, lblFechaSalida, lblHoraSalida, lblAsiento, lblVuelo, lblCosto,

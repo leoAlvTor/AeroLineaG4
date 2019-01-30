@@ -13,6 +13,7 @@ import javax.swing.*;
 
 
 public class CrearCuenta  extends JFrame implements ActionListener{
+    //etiquetas
     private JLabel lblCodigo;
     private JLabel lblCedula;
     private JLabel lblNombre;
@@ -21,20 +22,21 @@ public class CrearCuenta  extends JFrame implements ActionListener{
     private JLabel lblPregSeguridad;
     private JLabel lblRespuesta;
     private JLabel lblrol;
-
+    //campos de texto
     private JTextField camCodigo;
     private JTextField camCedula;
     private JTextField camNombre;
     private JTextField camApellido;
     private JTextField camRespuesta;
-
+    //campo especial para contraseñas
     private JPasswordField camContrasenia;
+    //comboBox
     private JComboBox <String>  jcbPregSeguridad;
     private JComboBox <String> jcbRol;
-
+    //botones
     private JButton bntReguistrarNewUsuario;
     private JButton bntCancelar;
-
+    //constructor donde se inicializan todas las variables perteneciantes a esta ventana
     public CrearCuenta() {
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -77,6 +79,9 @@ public class CrearCuenta  extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Metodo donde se crean los layout titulo de las ventanas, dimensines y agregacion de componentes en paneles
+     */
     private void initComponentes() {
 
         this.setTitle("Crear Cuenta");
@@ -132,7 +137,11 @@ public class CrearCuenta  extends JFrame implements ActionListener{
 
     }
 
-
+    /**
+     * Metodo escucha de eventos que se accionara al monento de realizar una pulsacion internamente se filtran las
+     * acciones para diferenciar el boton que se pulso.
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         String op=e.getActionCommand();
         //System.out.println("Opción: "+op);
@@ -140,6 +149,8 @@ public class CrearCuenta  extends JFrame implements ActionListener{
         switch (op) {
             case "btnRegUsuario":
                 System.out.println("btnRegUsuario");
+                //En las siquientes lineas se realiza los get de los campos que pertenecen a cada informacion que
+                // necesita el para registrar a un cliente
                 GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
 
                 String cedula = camCedula.getText();
@@ -163,6 +174,7 @@ public class CrearCuenta  extends JFrame implements ActionListener{
                 break;
 
             case "bntCancelar":
+                //regresar al menu administrador
                 MenuAdministrador menuAdministrador = new MenuAdministrador();
                 menuAdministrador.setSize(600,500);
                 menuAdministrador.ejecutar();

@@ -15,20 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Eliminar extends JFrame implements ActionListener {
-
+    //tabla y scroll pane
     private JTable tablaVuelos;
     private JScrollPane scrollPane;
-
+    //etiquetas
     private JLabel lblCodigo;
-
+    //campos de texto
     private JTextField txtCodigo;
-
+    //botones
     private JButton btnEliminar, btnSalir, btnBuscar;
-
+    //constructor
     public Eliminar(){
         ejecutar();
     }
-
+    //Determina las caracteristicas de la ventana
     public void ejecutar(){
         setSize(950,600);
         setVisible(true);
@@ -36,7 +36,7 @@ public class Eliminar extends JFrame implements ActionListener {
         init();
         buscar();
     }
-
+    //inicializa los componentes de la ventana
     public void init(){
            lblCodigo = new JLabel("Codigo del vuelo: ");
            txtCodigo = new JTextField(10);
@@ -73,11 +73,11 @@ public class Eliminar extends JFrame implements ActionListener {
            setSize(946,600);
 
            txtCodigo.setEditable(false);
-
+           //Crea una tabla en la ventana Eliminar
         tablaVuelos.setCellSelectionEnabled(true);
         ListSelectionModel cellSelectionModel = tablaVuelos.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        //captura el evento de seleccion de un dato en especifico de la tabla
         cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -96,7 +96,11 @@ public class Eliminar extends JFrame implements ActionListener {
 
     }
 
-
+    /**
+     * Este metodo se conectara con la base de datos y realizara una consulta a la base de datos donde retornara una
+     * cadena de tipo String especificando los destinos que dispone el sistema estos datos seran adicionados a un
+     * jcomboBox.
+     */
     public void buscar(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
         List<String> lista= new ArrayList<>();
@@ -120,6 +124,12 @@ public class Eliminar extends JFrame implements ActionListener {
         llenarTabla(seleccion);
     }
 
+    /**
+     * Este metodo realiza una consulta ala base de datos, luego de realizar la consulta retorna una lista de tipo
+     * vuelos luego creamos un modelo para llenar los datos de la tabla a este metodo se el pasara como parametro el
+     * destino
+     * @param destino
+     */
     public void llenarTabla(String destino){
         List<ModeloVuelos> modeloTablaVuelos;
 
@@ -129,6 +139,12 @@ public class Eliminar extends JFrame implements ActionListener {
         tablaVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
     }
 
+    /**
+     * Para eliminar un vuelo en especifico de igual forma el sistema mostrara en pantalla el destino donde el usuario
+     * debera elegir el vuelo a eliminar, luego de haber elegido el vuelo se pasa como parametro el id del vuelo para
+     * realizar la eliminacion del vuelo este proceso se lo realizara mendiante un metodo eliminar vuelo del la clase
+     * gestionAerolinea
+     */
     public void eliminar(){
         if(txtCodigo.getText().equals("")){
             JOptionPane.showMessageDialog(this, "No se ha seleccionado ningun vuelo");
@@ -150,7 +166,11 @@ public class Eliminar extends JFrame implements ActionListener {
 
 
     }
-
+    /**
+     * Metodo escucha de eventos que se accionara al monento de realizar una pulsacion internamente se filtran las
+     * acciones para diferenciar el boton que se pulso.
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();

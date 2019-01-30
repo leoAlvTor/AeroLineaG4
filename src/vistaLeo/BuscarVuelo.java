@@ -13,16 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuscarVuelo extends JFrame implements ActionListener {
-
+    //botones
     private JButton btnRegresar, btnOtroVuelo;
+    //tablas
     private JTable tablaVuelos;
+    //String
     private String seleccion;
+    //boolean rol
     private boolean rol;        // En caso de que sea administrador |true| o agente |false|
 
     public BuscarVuelo(){
         ejecutar();
     }
 
+    /**
+     * metodo que es llamado desde el constructor de la clase el cual determina las caracteristicas de la vetana
+     */
     public void ejecutar(){
         setLayout(null);
         setTitle("Listado de vuelos por destino");
@@ -43,9 +49,13 @@ public class BuscarVuelo extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Inicion de las variables entre ellas encontramos a los botones junto con las dimensiones, tablas, Scroll
+     * que forman parte de la ventana
+     */
     public void init(){
         tablaVuelos = new JTable();
-        tablaVuelos.setModel(new ModeloTablaKardex());
+        tablaVuelos.setModel(new ModeloTablaVuelos());
 
         JScrollPane jScrollPane = new JScrollPane(tablaVuelos);
         jScrollPane.setSize(1080, 500);
@@ -70,6 +80,12 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         repaint();
     }
 
+    /**
+     * Metodo que se encargara de cardar los datos necesarios en la tabla de vuelos, el metodo consiste en que se
+     * conecta a la base de datos para obtener la lista de vuelos mas actualizada que pueda estar en ese momento recibe
+     * como parametro el destino
+     * @param destino
+     */
     public void llenarTabla(String destino){
         List<ModeloVuelos> modeloTablaVuelos;
 
@@ -79,6 +95,10 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         tablaVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
     }
 
+    /**
+     * El metodo regresara al menu que le corresponda segun desde donde lo esten llamando puede si es llamado desde el
+     * menu agente de ventas regresara a este del mismo modo con el menu de administrador
+     */
     public void regresarMenu(){
         dispose();
         MenuAdministrador menuAdministrador = new MenuAdministrador();
@@ -86,6 +106,10 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         menuAdministrador.ejecutar();
     }
 
+    /**
+     * Este metodo se conectara a la base de datos para carga los  vuelos disponibles en funcion al destino, los datos
+     * seran adicionados a un comboBox
+     */
     public void mostrarVuelos(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
         List<String> lista= new ArrayList<>();
@@ -110,8 +134,11 @@ public class BuscarVuelo extends JFrame implements ActionListener {
 
     }
 
-
-    @Override
+    /**
+     * Metodo escucha de eventos que se accionara al monento de realizar una pulsacion internamente se filtran las
+     * acciones para diferenciar el boton que se pulso.
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("mostrar"))
             mostrarVuelos();

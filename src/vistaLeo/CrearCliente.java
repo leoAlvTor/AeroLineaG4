@@ -15,22 +15,27 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class CrearCliente extends JFrame implements ActionListener {
-
+    //estiquetas
     private JLabel lblNombre, lblCedula, lblDireccion, lblFecha;
-
+    //Campos de texto
     private JTextField txtNombre, txtCedula, txtDireccion, txtFecha;
-
+    //botones
     private JButton btnCreate, btnRead, btnUpdate, btnDelete, btnSalir, btnLimpiar;
-
+    //tablas
     private JTable tablaClientes;
     private JScrollPane scrollPane;
-
     private int codigoCliente;
 
+    /**
+     * Constructor
+     */
     public CrearCliente(){
         ejecutar();
     }
 
+    /**
+     * metodo que es llamdo desde el constructor
+     */
     public void ejecutar(){
         setSize(250,350);
         setVisible(true);
@@ -39,6 +44,9 @@ public class CrearCliente extends JFrame implements ActionListener {
         init();
     }
 
+    /**
+     *Este metodo inicializa todas las variables que pertenecen a esta ventana es llamado desde el metodo ejecutar
+     */
     public void  init(){
         lblNombre = new JLabel("Nombre completo:");
         lblCedula = new JLabel("Numero de cedula:");
@@ -110,7 +118,10 @@ public class CrearCliente extends JFrame implements ActionListener {
         setSize(680,680);
 
         add(pnlP);
-
+        /**
+         * bloque de programacion que determina un evento, que al seleccionar una fila de la tabla la informacion
+         * contenida en la fila seleccionada pasa a otros campos
+         */
         tablaClientes.setCellSelectionEnabled(true);
         ListSelectionModel cellSelectionModel = tablaClientes.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -141,6 +152,10 @@ public class CrearCliente extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Metodo que listara a los clientes en la tabla de esta ventana, el metodo hara uso de un metodo de la clase
+     * GestionAeroLinea el cual toma como nombre clienteList obteniendo una lista de tipo modelo cliente
+     */
     public void listarClientes(){
         List<ModeloCliente> modeloClienteList = new ArrayList<>();
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
@@ -149,6 +164,9 @@ public class CrearCliente extends JFrame implements ActionListener {
         tablaClientes.setModel(new ModeloTablaCliente(modeloClienteList));
     }
 
+    /**
+     * Metodo generico que limpia los campos de texto despues de realizar una accion
+     */
     public void limpiar(){
         txtFecha.setText("");
         txtNombre.setText("");
@@ -156,6 +174,11 @@ public class CrearCliente extends JFrame implements ActionListener {
         txtCedula.setText("");
     }
 
+    /**
+     * Metodo que se encarga de crear a un usuario, en la programacion interna se puede visualiza que antes de crear al
+     * usuario se pasa a realizar una validacion de la fecha madiante un metodo de la clase
+     * }GestionAeroLinea llamado .validarFecha()
+     */
     public void crearUsuario(){
         boolean bandera = new GestionAeroLinea().validarFecha(txtFecha.getText());
         if(bandera == false) {
@@ -169,12 +192,19 @@ public class CrearCliente extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Metodo que pasa como parametro el id del cliente que se desea borrar
+     */
     public void borrarCliente(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
 
         gestionAeroLinea.borrarCliente(codigoCliente);
     }
 
+    /**
+     * Metodo que obtendra la informacion de los campos, necesarios para realizar la actualizacion de informacion de el
+     * cliente especificado mediante el id, hace uso del metodo actualizarCliente() de la clase GestionAerolinea
+     */
     public void acualizarCliente(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
 
@@ -187,8 +217,11 @@ public class CrearCliente extends JFrame implements ActionListener {
         }
 
     }
-
-    @Override
+    /**
+     * Metodo escucha de eventos que se accionara al monento de realizar una pulsacion internamente se filtran las
+     * acciones para diferenciar el boton que se pulso.
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         String opcion = e.getActionCommand();
         PreFactura preFactura;

@@ -5,18 +5,26 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Esta clase esta programada en su mayoria etiquetas, las que comienzan con lbl contendran una imagen
+ * las que comienzen con txt mostraran la descripcion ala que hace referencia la imagen
+ */
 public class MenuAgente extends JFrame implements MouseListener {
-
+    //etiquetas con imagen
     private JLabel lblMostrar, lblComprar, lblReporte, lblSalir, lblAyuda;
+    //etiquetas con texto
     private JLabel txtMostrar, txtComprar, txtReporte, txtSalir, txtAyuda;
-
+    //metodo que puede ser llamado desde otra clase
     public void ejectuar(){
         pack();
         componentes();
         init();
         setSize(500,500);
     }
-
+    /**
+     * Metodo donde determinan los componentes que son parte de esta ventana internamente se establece el color de
+     * fondo el titulo de la ventana la ubicacion de los lbl con imagen en conjunto con las dimensiones
+     */
     public void init(){
         getContentPane().setBackground(Color.WHITE);
         setVisible(true);
@@ -63,7 +71,10 @@ public class MenuAgente extends JFrame implements MouseListener {
         txtSalir.setLocation(385,370);
         add(txtSalir);
     }
-
+    /**
+     * En este metodo se inicializan los respectivos componentes y se agregan las ubicaciones path de las imagenes,
+     * tambien se agrega una funcionalidad que estara en escucha cuando se pulse click sobre la imajen
+     */
     public void componentes(){
         lblMostrar = new JLabel();
         lblMostrar.setIcon(new ImageIcon(this.getClass().getResource("Imagenes/Mostrar.png")));
@@ -101,8 +112,10 @@ public class MenuAgente extends JFrame implements MouseListener {
         txtAyuda.setToolTipText("Muestra informacion del sistema");
 
     }
-
-    @Override
+    /**
+     * metodo encarcado en el escucha de los click que el usuario pulsara dependiendo la opcion que se elija
+     * @param e
+     */
     public void mouseClicked(MouseEvent e) {
         Object event = e.getSource();
         JLabel label = (JLabel) event;
