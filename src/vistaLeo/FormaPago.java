@@ -64,10 +64,22 @@ public class FormaPago extends JFrame{
 
     public void determinarTarjeta(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
-
-        int b = gestionAeroLinea.comprobarTarjeta(BigInteger.valueOf(Long.parseLong(txtForma.getText())));
-
-
+        int b = 0;
+        if(txtForma.getText().length() > 0) {
+            b = gestionAeroLinea.comprobarTarjeta(BigInteger.valueOf(Long.parseLong(txtForma.getText())));
+        }
+        if(b == 1)
+            System.out.println("Visa normalita");
+        else if(b==11)
+            System.out.println("Vaisa electron");
+        else if(b==2)
+            System.out.println("Mastercad International");
+        else if(b==3)
+            System.out.println("Discover International");
+        else if(b==4)
+            System.out.println("American Express");
+        else
+            System.out.println("No hay nada");
     }
 
 
