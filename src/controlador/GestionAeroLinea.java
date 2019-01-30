@@ -178,6 +178,13 @@ public class GestionAeroLinea {
         return datos;
     }
 
+
+    /**
+     * Este metodo realizara la consulta de los datos que pertenecen al prpducto para conocer su respectivo kardex, para
+     * realizar la consulta se enviara como parametro el destino y retornara la informacion respectiva
+     * @param destino
+     * @return
+     */
     public List<ModeloKardex> listarKardex(String destino) {
 
         List<ModeloKardex> datos = new ArrayList<>();

@@ -1,8 +1,7 @@
 <component name="libraryTable">
   <library name="javafx-swt">
     <CLASSES>
-      <root url="jar://$USER_HOME$/IdeaProjects/conexion/ojdbc6.jar!/" />
-      <root url="jar://$USER_HOME$/IdeaProjects/conexion/DateChooser.jar!/" />
+      <root url="jar://E:/ojdbc8.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

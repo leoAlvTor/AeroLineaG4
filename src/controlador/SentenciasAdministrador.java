@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * En esta clase se programan todas las sentencias pertenecientes al rol de administrador se realizo de esta manera para
+ * tener el codigo de una manera mas ordenada, gestionando de esta manera las sentencias que hara uso cada usuario en el
+ * sistema
+ */
 public class SentenciasAdministrador {
     private ResultSet resultSet = null;
     private PreparedStatement preparedStatement = null;
@@ -20,6 +25,23 @@ public class SentenciasAdministrador {
     private String cedula, nombre, apellido, rol, password, respuesta, pregunta;
 
     private ModeloEmpleado modeloEmpleado;
+
+    /**
+     * En este metodo se altualizaran los datos que el usuario cree cambiar, el metodo esta programado de tal manera que
+     * se enviara como parametro todos los atributos que pertenescan al dicho vuelo, siendo asi un metodo dinamico
+     * @param con
+     * @param id
+     * @param capacidad
+     * @param hSalida
+     * @param hLlegada
+     * @param tipo
+     * @param costo
+     * @param paeroSalida
+     * @param paeroLlegada
+     * @param avion
+     * @param fSalida
+     * @param fLlegada
+     */
 
     public void actualizarVuelos(ConexionAdministrador con, String id, String capacidad, String hSalida,
                                  String hLlegada, String tipo, String costo, String paeroSalida, String paeroLlegada,
@@ -82,6 +104,14 @@ public class SentenciasAdministrador {
 
     }
 
+    /**
+     * Este metodo realiza una consulta con la base de datos para obtener una lista de vuelos disponibles en funcion a
+     * un destino recibe como parametro el destino donde se desea conocer la informacion y un objeto de tipo Conexion en
+     * fincion al rol del usuario que este haciendo uso de este metodo
+     * @param con
+     * @param destino
+     * @return
+     */
     public List<ModeloVuelos> listarVuelosPorDestino(ConexionAdministrador con, String destino){
         List<ModeloVuelos> modeloVuelosList = new ArrayList<>();
         ModeloVuelos modeloVuelos = new ModeloVuelos();
@@ -130,6 +160,12 @@ public class SentenciasAdministrador {
         return modeloVuelosList;
     }
 
+    /**
+     * En este metodo eliminara el vuelo en funcion al id que se pasara como parametro junto con la conexion que
+     * de su respectivo usuario para realizar dicha eliminacion del vuelo
+     * @param con
+     * @param vuelo
+     */
     public void eliminarVuelo(ConexionAdministrador con,int vuelo){
         try{
             String sentencia = "Delete from age_vuelos where vue_id = ?";
@@ -141,6 +177,17 @@ public class SentenciasAdministrador {
         }
     }
 
+    /**
+     * Este metodo insertara un nuevo usuario en la base de datos con los parametros que estan a continuacion
+     * @param con
+     * @param pCedula
+     * @param pNombre
+     * @param pApellido
+     * @param pPassword
+     * @param pPregunta
+     * @param pRespuesta
+     * @param pRol
+     */
     public void crearUsuario(ConexionAdministrador con, String pCedula, String pNombre, String pApellido,
                              String pPassword, String pPregunta, String pRespuesta, String pRol){
 
@@ -166,6 +213,13 @@ public class SentenciasAdministrador {
 
     }
 
+    /**
+     * En este metodo se listara los destinos, se recibira como parametro el destino como tal junto con la connexion
+     * perteneciente al usuario que este haciedo uso de ella, retornara una lista donde conste cada destino que ofrece
+     * la aerolinea
+     * @param con
+     * @return
+     */
     public List<String> listarDestinos(ConexionAdministrador con){
         List<String> datos = new ArrayList<>();
 
@@ -183,6 +237,14 @@ public class SentenciasAdministrador {
         return datos;
     }
 
+    /**
+     * Este metodo realizara una consulta obteniendo la lista completa de empleados que esten registrados en el sistema
+     * como parametro recibe la conexion del el usuario administrador, y retornara una lista de tipo
+     * ModeloEmpleado. este metodo se usara para obtener la informacion necesaria para realizar la fincionalidad de
+     * recuparacion de contraseña
+     * @param con
+     * @return
+     */
     public List<ModeloEmpleado> recuperarPass(ConexionAdministrador con){
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
 
@@ -212,6 +274,13 @@ public class SentenciasAdministrador {
         return modeloEmpleadoList;
     }
 
+    /**
+     *  Este metodo realizara una consulta obteniendo la lista completa de empleados que esten registrados en el sistema
+     *  como parametro recibe la conexion del el usuario administrador, y retornara una lista de tipo
+     *  ModeloEmpleado.
+     * @param con
+     * @return
+     */
     public List<ModeloEmpleado> obtenerEmpleados(ConexionAdministrador con){
 
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();

@@ -1,5 +1,8 @@
 package controlador;
-
+/**
+ * En esta clase se programaron todas las sentencias que pertenecen al rol de agente de ventas entre ellos se encuentran
+ * los actualizaciones creaciones de registros ediciones y eliminaciones
+ */
 import modelo.ModeloCliente;
 import modelo.ModeloVuelos;
 
@@ -17,6 +20,12 @@ public class SentenciasAgente {
     private ResultSet resultado = null;
     private PreparedStatement psentencia = null;
 
+    /**
+     * Este metodo borrara a un cliente en especifico mediante su id, recibiendo como parametro la conexion de agente y
+     * el id perteneciente al cliente a eliminar
+     * @param con
+     * @param id
+     */
     public void borrarCliente(ConexionAgente con, int id){
         try{
             String sentencia = "delete from age_clientes where cli_id = ?";
@@ -28,6 +37,17 @@ public class SentenciasAgente {
         }
     }
 
+    /**
+     * Este metodo realiza una acualizacion de un cliente en especifico el metodo recibira todos los parametros que
+     * pertenece a el cliente exepto el id ya que este es necesario para identificar al uusario de manera unica, ademas
+     * se pasara como parametro el id junto con la conexion de agente.
+     * @param con
+     * @param id
+     * @param nombre
+     * @param cedula
+     * @param direccion
+     * @param fecha
+     */
     public void actualizarCliente(ConexionAgente con, int id, String nombre, String cedula, String direccion,
                                   String fecha){
         try{
@@ -47,6 +67,15 @@ public class SentenciasAgente {
         }
     }
 
+    /**
+     *Este metodo crea a un nuevo cliente recibiendo como parametro la conexion agente con sus respectivos atributos
+     * que se describen a continuacion
+     * @param con
+     * @param nombre
+     * @param cedula
+     * @param direccion
+     * @param fecha
+     */
     public void crearCliente(ConexionAgente con, String nombre, String cedula, String direccion, String fecha){
         try{
             String sentencia = "insert into age_clientes values(age_clientes_seq.nextval,?,?,?,?)";
@@ -64,7 +93,12 @@ public class SentenciasAgente {
         }
     }
 
-
+    /**
+     * Este metodo retorna los de clientes en una lista de tipo modelo cliente, y recibe como parametro la conexion de
+     * tipo agente
+     * @param con
+     * @return
+     */
     public List<ModeloCliente> clienteList(ConexionAgente con){
         List<ModeloCliente> clientes = new ArrayList<>();
         ModeloCliente modeloCliente = new ModeloCliente();
