@@ -14,6 +14,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] leo){
 
+     //   CrearCliente c= new CrearCliente();
+
         //Eliminar eliminar = new Eliminar();
 /*
         System.out.println();
@@ -41,13 +43,8 @@ public class Main {
        // FormaPago formaPago= new FormaPago();
 
         //BuscarVuelo buscarVuelo = new BuscarVuelo();
-
-            Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        int a = calendar.get(Calendar.YEAR);
-        int b = calendar.get(Calendar.MONTH);
-        int c = calendar.get(Calendar.DAY_OF_MONTH);
-        System.out.println(a + " mes: " + b + " dia: "+ c);
 */
+
+
     }
 }

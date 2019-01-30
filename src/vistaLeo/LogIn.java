@@ -153,7 +153,7 @@ public class LogIn extends JFrame implements ActionListener {
                     MenuAgente menu = new MenuAgente();
                     menu.setSize(500,500);
                     menu.ejectuar();
-                    this.setVisible(false);
+                    dispose();
                 }else if(banderaRol == false) {
                     System.out.println("Administrador");
                     MenuAdministrador menuAdministrador = new MenuAdministrador();
