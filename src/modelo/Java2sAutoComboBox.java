@@ -4,6 +4,10 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
 import java.awt.event.ItemEvent;
 
+/**
+ * En este metodo se cargan los respectivos datos, esta programado de forma generica de forma que podra ser usado desde
+ * la ventada que el programador lo creyere nesesario 
+ */
 public class Java2sAutoComboBox extends JComboBox {
     private class AutoTextFieldEditor extends BasicComboBoxEditor {
 

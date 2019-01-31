@@ -45,6 +45,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
 
+/**
+ * En esta clase se programa los metodos necesarios para realizar un autocompletado de textos, para predecir los
+ * caracteres del campo de textos se tendra que realizar una consulta a la base de datos.
+ */
 public class Java2sAutoTextField extends JTextField {
     class AutoDocument extends PlainDocument {
 
