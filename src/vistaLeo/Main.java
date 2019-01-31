@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] leo){
      //   CrearCliente c= new CrearCliente();
 
-        FormaPago formaPago = new FormaPago();
+       // FormaPago formaPago = new FormaPago();
 
         //Eliminar eliminar = new Eliminar();
 /*
@@ -34,7 +34,7 @@ public class Main {
         menu.setSize(500,500);
         menu.ejectuar();
 */
-      //  PreFactura preFactura = new PreFactura();
+       PreFactura preFactura = new PreFactura();
 /*
 
         //VuelosVendidos vuelosVendidos = new VuelosVendidos();

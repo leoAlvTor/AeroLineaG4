@@ -1,6 +1,7 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
+import modelo.IconTextField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,38 +11,46 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.math.BigInteger;
 
-public class FormaPago extends JFrame{
+public class FormaPago extends JPanel{
     private JButton btn1, btn2;
-    private JTextField txtForma;
+    private IconTextField txtForma;
     private JLabel lbl1;
+    private Icon icon1, icon2, icon3, icon4, icon5;
 
     public FormaPago(){
         ejecutar();
     }
 
     public void ejecutar(){
-        setSize(350,200);
+        setSize(349,199);
         setVisible(true);
-        setTitle("Tarjeta de credito");
         init();
+
+        System.out.println("Tamano de esa cosa: "+txtForma.getSize());
+
+        setSize(350, 100);
     }
 
     public void init(){
+        icon1 = new ImageIcon(this.getClass().getResource("Imagenes/tarjetas/Vacio.png"));
+        icon2 = new ImageIcon(this.getClass().getResource("Imagenes/tarjetas/American.png"));
+        icon3 = new ImageIcon(this.getClass().getResource("Imagenes/tarjetas/Discover.png"));
+        icon4 = new ImageIcon(this.getClass().getResource("Imagenes/tarjetas/Master.png"));
+        icon5 = new ImageIcon(this.getClass().getResource("Imagenes/tarjetas/Visa.png"));
+
+
+
         JPanel pnl1 = new JPanel(new FlowLayout());
         lbl1 = new JLabel("Ingrese el numero de tarjeta:");
         pnl1.add(lbl1);
-        txtForma = new JTextField(20);
+        txtForma = new IconTextField();
+        txtForma.setmIcon(icon1);
+        txtForma.setBorder(txtForma.getBorder());
+        txtForma.setColumns(19);
         pnl1.add(txtForma);
-
-        JPanel pnl2 = new JPanel(new FlowLayout());
-        btn1 = new JButton("Confirmar Pago");
-        pnl2.add(btn1);
-        btn2 = new JButton("Cancelar Pago");
-        pnl2.add(btn2);
 
         JPanel pnl3 = new JPanel(new GridLayout(2,1));
         pnl3.add(pnl1);
-        pnl3.add(pnl2);
 
         add(pnl3);
 
@@ -69,17 +78,15 @@ public class FormaPago extends JFrame{
             b = gestionAeroLinea.comprobarTarjeta(BigInteger.valueOf(Long.parseLong(txtForma.getText())));
         }
         if(b == 1)
-            System.out.println("Visa normalita");
-        else if(b==11)
-            System.out.println("Vaisa electron");
+            txtForma.setmIcon(icon5);
         else if(b==2)
-            System.out.println("Mastercad International");
+            txtForma.setmIcon(icon4);
         else if(b==3)
-            System.out.println("Discover International");
+            txtForma.setmIcon(icon3);
         else if(b==4)
-            System.out.println("American Express");
+            txtForma.setmIcon(icon2);
         else
-            System.out.println("No hay nada");
+            txtForma.setmIcon(icon1);
     }
 
 

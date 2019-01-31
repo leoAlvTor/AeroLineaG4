@@ -162,7 +162,6 @@ public class PreFactura extends JFrame implements  ActionListener{
             }
         });
 
-
     }
 
     public void cargarTiposP(){
@@ -221,6 +220,10 @@ public class PreFactura extends JFrame implements  ActionListener{
         txtAutoComplete.requestFocus();
     }
 
+    public void metodoChevere(){
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -228,7 +231,7 @@ public class PreFactura extends JFrame implements  ActionListener{
 
         switch (opciones){
             case "crear":
-                System.out.println("Aqui deberia ir mi metodo que creara cosas cheveres :v");
+
                 break;
             case "buscar":
                 buscar();

@@ -17,7 +17,7 @@ public class SentenciasAgente {
     private CallableStatement cStmt = null;
     private Connection conn = null;
 
-    private void insertarCabeceraDetalle(ConexionAgente con, String fecha, double costo, int cliente, int empleado,
+    public void insertarCabeceraDetalle(ConexionAgente con, String fecha, double costo, int cliente, int empleado,
                                          String asiento, String tipoPasajero, int codigoVuelos){
         con = new ConexionAgente();
         try {
