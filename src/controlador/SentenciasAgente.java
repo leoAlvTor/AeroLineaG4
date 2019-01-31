@@ -14,14 +14,11 @@ public class SentenciasAgente {
     private ResultSet resultado = null;
     private PreparedStatement psentencia = null;
 
-    private CallableStatement cStmt = null;
-    private Connection conn = null;
 
     public void insertarCabeceraDetalle(ConexionAgente con, String fecha, double costo, int cliente, int empleado,
                                          String asiento, String tipoPasajero, int codigoVuelos){
-        con = new ConexionAgente();
         try {
-            cStmt = con.getConnection().prepareCall("{call p_insertar_cabecera(?,?,?,?,?,?,?)}");
+            CallableStatement cStmt = con.getConnection().prepareCall("{call p_insertar_cabecera(?,?,?,?,?,?,?)}");
             cStmt.setString(1, fecha);
             cStmt.setDouble(2, costo);
             cStmt.setInt(3, cliente);
@@ -33,7 +30,6 @@ public class SentenciasAgente {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        con.Desconectar();
     }
 
     public List<String> asientosDisponibles(ConexionAgente con, int avi_id){

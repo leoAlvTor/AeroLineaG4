@@ -10,11 +10,15 @@ public class MenuAgente extends JFrame implements MouseListener {
     private JLabel lblMostrar, lblComprar, lblReporte, lblSalir, lblAyuda;
     private JLabel txtMostrar, txtComprar, txtReporte, txtSalir, txtAyuda;
 
-    public void ejectuar() {
+    private int codEmp;
+
+    public void ejectuar(int codigoEmpleado) {
+        codEmp = codigoEmpleado;
         pack();
         componentes();
         init();
         setSize(500, 500);
+        setLocationRelativeTo(null);
     }
 
     public void init() {
@@ -114,23 +118,23 @@ public class MenuAgente extends JFrame implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         PreFactura preFactura;
         BuscarVuelo buscarVuelo;
+        Ayuda ayuda;
 
         Object event = e.getSource();
         JLabel label = (JLabel) event;
 
         if (label == lblAyuda)
-            System.out.println("auxilio");
+            ayuda = new Ayuda(codEmp);
         else if (label == lblComprar) {
-            preFactura = new PreFactura();
+            preFactura = new PreFactura(codEmp);
             dispose();
         } else if (label == lblMostrar){
             dispose();
-            buscarVuelo = new BuscarVuelo(false);
+            buscarVuelo = new BuscarVuelo(false, codEmp);
         }else if(label ==lblReporte){
             System.out.println("Reporte de ventas");
         }else if(label == lblSalir) {
             logOut();
-            dispose();
         }
     }
 

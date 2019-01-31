@@ -21,8 +21,9 @@ public class Main {
         LogIn logIn = new LogIn();
         logIn.init();
         logIn.setSize(300,350);
-        logIn.setLocation(870,270);
-/*
+        logIn.setLocationRelativeTo(null);
+
+        /*
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         logIn.setLocation(dimension.width/2-logIn.getSize().width/2, dimension.height/2-logIn.getSize().height/2);
@@ -34,7 +35,7 @@ public class Main {
         menu.setSize(500,500);
         menu.ejectuar();
 */
-       PreFactura preFactura = new PreFactura();
+       PreFactura preFactura = new PreFactura(1);
 /*
 
         //VuelosVendidos vuelosVendidos = new VuelosVendidos();

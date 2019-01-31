@@ -108,7 +108,7 @@ public class MenuAdministrador extends JFrame implements MouseListener {
 
     public void llamarBuscarVuelos(){
         dispose();
-        BuscarVuelo buscarVuelo = new BuscarVuelo(true);
+        BuscarVuelo buscarVuelo = new BuscarVuelo(true,0);
     }
 
     public void logOut(){

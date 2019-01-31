@@ -9,6 +9,9 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,16 +32,24 @@ public class PreFactura extends JFrame implements  ActionListener{
     private JTable tablaVuelos;
     private JScrollPane scrollPane;
 
+
     int codigoVuelo;
     String fechaNac;
     int tipoPasajero;
+
+    private int idEmpleado;
+
+    private boolean tarjetaValida;
 
     private ArrayList<String> stringsCedulas;
     private Java2sAutoTextField txtAutoComplete;
     private List<ModeloCliente> modeloClienteList;
 
-    public PreFactura(){
+    public PreFactura(int codEmpleado){
+        idEmpleado = codEmpleado;
         ejecutar();
+
+
     }
 
     public void ejecutar(){
@@ -50,6 +61,7 @@ public class PreFactura extends JFrame implements  ActionListener{
         cargarCedulas();
         init();
         setSize(800,900);
+
     }
 
     public void init(){
@@ -222,7 +234,112 @@ public class PreFactura extends JFrame implements  ActionListener{
 
     public void metodoChevere(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        String fecha = txtFecha.getText();
+        double costo= Double.parseDouble(txtPrecio.getText());
+
+        int idCliente=0;
+        for (int i = 0; i < modeloClienteList.size(); i++) {
+            if(modeloClienteList.get(i).getCedula().equals(txtAutoComplete.getText())) {
+                fechaNac = modeloClienteList.get(i).getFecha_nac();
+            }
+        }
+
+        String asiento = (String) (comboAsientos.getSelectedItem());
+
+        gestionAeroLinea = new GestionAeroLinea();
+
+        String tipoP = "";
+
+        if(tipoPasajero==1)
+            tipoP = "B";
+        else if(tipoPasajero== 2 )
+            tipoP = "E";
+        else if(tipoPasajero==3)
+            tipoP = "E";
+        else if (tipoPasajero == 4)
+            tipoP = "N";
+        else if(tipoPasajero == 5)
+            tipoP = "D";
+        else
+            tipoP = "";
+
+        Object[] opciones = {"Efectivo", "Tarjeta de credito"};
+        Object seleccion1 = opciones[0];
+
+        int seleccion = JOptionPane.showOptionDialog(this,
+                "Seleccione una forma de pago",
+                "PreFactura",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                seleccion1);
+
+        JTextField txtTarjeta = new JTextField(20);
+
+        final GestionAeroLinea g = new GestionAeroLinea();
+
+        txtTarjeta.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int leo = 0;
+                if(!txtTarjeta.getText().equals("")){
+                    leo = g.comprobarTarjeta(BigInteger.valueOf(Long.parseLong(txtTarjeta.getText())));
+
+                    switch (leo){
+                        case 1:
+                            setValorComprobado(true);
+                            break;
+                        case 2:
+                            setValorComprobado(true);
+                            break;
+                        case 3:
+                            setValorComprobado(true);
+                            break;
+                        case 4:
+                            setValorComprobado(true);
+                            break;
+                        case 0:
+                            setValorComprobado(false);
+                    }
+                }
+            }
+        });
+
+        if(seleccion == 0){
+            gestionAeroLinea.insertarCabeceraDetalle(fecha, costo, idCliente, idEmpleado, asiento, tipoP, codigoVuelo);
+        }else if(seleccion == 1){
+            seleccion = JOptionPane.showConfirmDialog(this, txtTarjeta,
+                    "Ingrese el numero de tarjeta", JOptionPane.YES_NO_OPTION);
+
+            if(seleccion == 0 && txtTarjeta.getText().length()>=10 && tarjetaValida == true){
+                System.out.println("correctp");
+                gestionAeroLinea.insertarCabeceraDetalle(fecha, costo, idCliente, idEmpleado, asiento, tipoP, codigoVuelo);
+            }else if(seleccion ==1)
+                JOptionPane.showMessageDialog(this, "\tCompra cancelada", "Cancelado",
+                        JOptionPane.PLAIN_MESSAGE);
+            else if(seleccion == 0 && txtTarjeta.getText().length()<10 || tarjetaValida == false)
+                JOptionPane.showMessageDialog(this, "La tarjeta ingresada es invalida");
+
+//        gestionAeroLinea.insertarCabeceraDetalle(fecha, costo, idCliente, idEmpleado, asiento, tipoP, codigoVuelo);
+
+        }
     }
+
+    public void setValorComprobado(boolean comprobacion){
+        tarjetaValida = comprobacion;
+    }
+
 
 
     @Override
@@ -231,7 +348,7 @@ public class PreFactura extends JFrame implements  ActionListener{
 
         switch (opciones){
             case "crear":
-
+                metodoChevere();
                 break;
             case "buscar":
                 buscar();
@@ -317,7 +434,7 @@ public class PreFactura extends JFrame implements  ActionListener{
     public void cerrar(){
         MenuAgente menu = new MenuAgente();
         menu.setSize(500,500);
-        menu.ejectuar();
+        menu.ejectuar(idEmpleado);
         dispose();
     }
 

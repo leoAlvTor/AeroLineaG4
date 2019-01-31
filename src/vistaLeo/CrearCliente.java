@@ -202,7 +202,7 @@ public class CrearCliente extends JFrame implements ActionListener {
                 limpiar();
                 break;
             case"salir":
-                preFactura = new PreFactura();
+                preFactura = new PreFactura(1);
                 dispose();
                 break;
             case "create":

@@ -19,9 +19,11 @@ public class BuscarVuelo extends JFrame implements ActionListener {
     private JTable tablaVuelos;
     private String seleccion;
     private boolean rol;        // En caso de que sea administrador |true| o agente |false|
+    private int codigoEmpleado;
 
-    public BuscarVuelo(boolean pRol){
+    public BuscarVuelo(boolean pRol, int codigoEmp){
         rol = pRol;
+        codigoEmpleado = codigoEmp;
         ejecutar();
     }
 
@@ -71,10 +73,6 @@ public class BuscarVuelo extends JFrame implements ActionListener {
 
         repaint();
 
-
-        if (rol == false){
-            PreFactura preFactura = new PreFactura();
-        }
     }
 
     public void llenarTabla(String destino){
@@ -96,7 +94,7 @@ public class BuscarVuelo extends JFrame implements ActionListener {
     public void regresarMenuAgente(){
         MenuAgente menu = new MenuAgente();
         menu.setSize(500,500);
-        menu.ejectuar();
+        menu.ejectuar(codigoEmpleado);
         dispose();
     }
 
@@ -123,7 +121,6 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         llenarTabla(seleccion);
 
     }
-
 
     public void determinarRegreso(){
             if(rol == false){

@@ -19,6 +19,8 @@ public class LogIn extends JFrame implements ActionListener {
     private JTextField txtCedula, txtPass;
     private JButton btnLog, btnCancelar, btnSalir, btnRecuperar;
 
+    private List<ModeloEmpleado> modeloEmpleados;
+
     // Labels
     JLabel lblTitulo, lblCedula, lblPass;
 
@@ -124,7 +126,7 @@ public class LogIn extends JFrame implements ActionListener {
 
         if(e.getActionCommand().equals("login")){
             GestionAeroLinea gestionAeroLinea= new GestionAeroLinea();
-            List<ModeloEmpleado> modeloEmpleados = new ArrayList<>();
+            modeloEmpleados = new ArrayList<>();
             modeloEmpleados = gestionAeroLinea.obtenerEmpleados();
             boolean bandera = false;
             boolean banderaRol = false;
@@ -150,9 +152,15 @@ public class LogIn extends JFrame implements ActionListener {
             if(bandera == true){
                 if(banderaRol == true) {
                     System.out.println("Agente");
-                    MenuAgente menu = new MenuAgente();
-                    menu.setSize(500,500);
-                    menu.ejectuar();
+                    MenuAgente menuAgente = new MenuAgente();
+                    menuAgente.setSize(500,500);
+                    int idEm=0;
+                    for (int i = 0; i < modeloEmpleados.size(); i++) {
+                        if(txtCedula.equals(modeloEmpleados.get(i).getCedula()))
+                             idEm = modeloEmpleados.get(i).getCodigo();
+                    }
+
+                    menuAgente.ejectuar(idEm);
                     dispose();
                 }else if(banderaRol == false) {
                     System.out.println("Administrador");

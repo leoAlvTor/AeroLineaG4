@@ -100,11 +100,10 @@ public class GestionAeroLinea {
     |
      */
 
-    private void insertarCabeceraDetalle(ConexionAgente con, String fecha, double costo, int cliente, int empleado,
+    public void insertarCabeceraDetalle(String fecha, double costo, int cliente, int empleado,
                                          String asiento, String tipoPasajero, int codigoVuelos){
         conexionAgente = new ConexionAgente();
         conexionAgente.Conectar();
-
         if(conexionAgente.getConnection()!= null){
             System.out.println("Conexion agente correcta");
             sentenciasAgente = new SentenciasAgente();
