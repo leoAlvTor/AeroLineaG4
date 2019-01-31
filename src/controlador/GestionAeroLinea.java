@@ -100,6 +100,27 @@ public class GestionAeroLinea {
     |
      */
 
+    public void reporteFecha(){
+        conexionAgente = new ConexionAgente();
+        conexionAgente.Conectar();
+        List<String> reporte = new ArrayList<>();
+        if(conexionAgente.getConnection() != null){
+            System.out.println("Conexion agente para reporte");
+            sentenciasAgente = new SentenciasAgente();
+            reporte = sentenciasAgente.reporteFecha(conexionAgente);
+
+            for (int i = 0; i < reporte.size(); i++) {
+                System.out.println(reporte.get(i));
+            }
+
+
+
+        }else{
+            System.out.println("Error conexion agente para rporte");
+        }
+        conexionAgente.Desconectar();
+    }
+
     public void insertarCabeceraDetalle(String fecha, double costo, int cliente, int empleado,
                                          String asiento, String tipoPasajero, int codigoVuelos){
         conexionAgente = new ConexionAgente();

@@ -35,7 +35,7 @@ public class Main {
         menu.setSize(500,500);
         menu.ejectuar();
 */
-       PreFactura preFactura = new PreFactura(1);
+       //PreFactura preFactura = new PreFactura(1);
 /*
 
         //VuelosVendidos vuelosVendidos = new VuelosVendidos();
@@ -45,6 +45,9 @@ public class Main {
         //BuscarVuelo buscarVuelo = new BuscarVuelo();
 */
 
+
+        GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
+        gestionAeroLinea.reporteFecha();
 
 
     }

@@ -331,7 +331,6 @@ public class PreFactura extends JFrame implements  ActionListener{
             else if(seleccion == 0 && txtTarjeta.getText().length()<10 || tarjetaValida == false)
                 JOptionPane.showMessageDialog(this, "La tarjeta ingresada es invalida");
 
-//        gestionAeroLinea.insertarCabeceraDetalle(fecha, costo, idCliente, idEmpleado, asiento, tipoP, codigoVuelo);
 
         }
     }
