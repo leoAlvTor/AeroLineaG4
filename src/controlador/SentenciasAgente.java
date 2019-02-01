@@ -1,8 +1,14 @@
 package controlador;
-
+/**
+ * En esta clase se programaron todas las sentencias que pertenecen al rol de agente de ventas entre ellos se encuentran
+ * los actualizaciones creaciones de registros ediciones y eliminaciones
+ */
 import modelo.ModeloCliente;
+import modelo.ModeloVuelos;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,49 +20,12 @@ public class SentenciasAgente {
     private ResultSet resultado = null;
     private PreparedStatement psentencia = null;
 
-    private CallableStatement cStmt = null;
-    private Connection conn = null;
-
-    public void insertarCabeceraDetalle(ConexionAgente con, String fecha, double costo, int cliente, int empleado,
-                                         String asiento, String tipoPasajero, int codigoVuelos){
-        con = new ConexionAgente();
-        try {
-            cStmt = con.getConnection().prepareCall("{call p_insertar_cabecera(?,?,?,?,?,?,?)}");
-            cStmt.setString(1, fecha);
-            cStmt.setDouble(2, costo);
-            cStmt.setInt(3, cliente);
-            cStmt.setInt(4, empleado);
-            cStmt.setString(5, asiento);
-            cStmt.setString(6, tipoPasajero);
-            cStmt.setInt(7, codigoVuelos);
-            cStmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        con.Desconectar();
-    }
-
-    public List<String> asientosDisponibles(ConexionAgente con, int avi_id){
-        List<String> asientos = new ArrayList<>();
-        try{
-            String sentencia = "Select * from age_asientos " +
-                    "where age_asientos.age_avion_avi_id = ? and asi_disponible = 'D'";
-            psentencia = con.getConnection().prepareStatement(sentencia);
-            psentencia.setInt(1,avi_id);
-            System.out.println("Id del avion: "+ avi_id);
-            resultado = psentencia.executeQuery();
-            while(resultado.next()){
-                String leo = resultado.getString("asi_loc");
-                System.out.println(leo);
-                asientos.add(leo);
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return asientos;
-    }
-
+    /**
+     * Este metodo borrara a un cliente en especifico mediante su id, recibiendo como parametro la conexion de agente y
+     * el id perteneciente al cliente a eliminar
+     * @param con
+     * @param id
+     */
     public void borrarCliente(ConexionAgente con, int id){
         try{
             String sentencia = "delete from age_clientes where cli_id = ?";
@@ -68,6 +37,17 @@ public class SentenciasAgente {
         }
     }
 
+    /**
+     * Este metodo realiza una acualizacion de un cliente en especifico el metodo recibira todos los parametros que
+     * pertenece a el cliente exepto el id ya que este es necesario para identificar al uusario de manera unica, ademas
+     * se pasara como parametro el id junto con la conexion de agente.
+     * @param con
+     * @param id
+     * @param nombre
+     * @param cedula
+     * @param direccion
+     * @param fecha
+     */
     public void actualizarCliente(ConexionAgente con, int id, String nombre, String cedula, String direccion,
                                   String fecha){
         try{
@@ -87,6 +67,15 @@ public class SentenciasAgente {
         }
     }
 
+    /**
+     *Este metodo crea a un nuevo cliente recibiendo como parametro la conexion agente con sus respectivos atributos
+     * que se describen a continuacion
+     * @param con
+     * @param nombre
+     * @param cedula
+     * @param direccion
+     * @param fecha
+     */
     public void crearCliente(ConexionAgente con, String nombre, String cedula, String direccion, String fecha){
         try{
             String sentencia = "insert into age_clientes values(age_clientes_seq.nextval,?,?,?,?)";
@@ -104,7 +93,12 @@ public class SentenciasAgente {
         }
     }
 
-
+    /**
+     * Este metodo retorna los de clientes en una lista de tipo modelo cliente, y recibe como parametro la conexion de
+     * tipo agente
+     * @param con
+     * @return
+     */
     public List<ModeloCliente> clienteList(ConexionAgente con){
         List<ModeloCliente> clientes = new ArrayList<>();
         ModeloCliente modeloCliente = new ModeloCliente();

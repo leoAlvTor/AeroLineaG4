@@ -2,18 +2,13 @@ package controlador;
 
 import modelo.ModeloCliente;
 import modelo.ModeloEmpleado;
+import modelo.ModeloKardex;
 import modelo.ModeloVuelos;
 
-import java.math.BigInteger;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 
 public class GestionAeroLinea {
     public GestionAeroLinea(){}
@@ -32,54 +27,6 @@ public class GestionAeroLinea {
     |
      */
 
-
-    public int comprobarTarjeta(BigInteger numero) {
-        String cmp = String.valueOf(numero);
-
-        char val1 = cmp.charAt(0);
-        if(cmp.length() >0) {
-            switch (val1) {
-                case '4':
-                    return 1;
-                case '5':
-                    return 2;
-                case '6':
-                    return 3;
-                case '3':
-                    return 4;
-                default:
-                    return 0;
-            }
-        }else
-            return 0;
-    }
-
-    public int tipoPasajero(String fechaAct, String fechaNac){
-        int years = 0;
-        try {
-            Date fechaActual = new SimpleDateFormat("dd/MM/yyyy").parse(fechaAct);
-            Date fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNac);
-
-            long diferencia = fechaActual.getTime() - fechaNacimiento.getTime();
-            years = (int) ((diferencia/(24*60*60*1000))/365);
-            System.out.println("Cantidad de dias transcurridos: "+ years);
-        }catch (Exception e) {
-            e.printStackTrace();
-
-        }
-
-        if(years  <= 2){
-            return 1;
-        }else if(years >= 65){
-            return 2;
-        }else if(years > 2 && years < 18){
-            return 3;
-        }else if(years >=18 && years < 65) {
-            return 4;
-        }
-        return years;
-    }
-
     public boolean validarFecha(String fecha){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
@@ -92,6 +39,7 @@ public class GestionAeroLinea {
         return true;
     }
 
+
     /*
     |
     |
@@ -100,36 +48,11 @@ public class GestionAeroLinea {
     |
      */
 
-    private void insertarCabeceraDetalle(ConexionAgente con, String fecha, double costo, int cliente, int empleado,
-                                         String asiento, String tipoPasajero, int codigoVuelos){
-        conexionAgente = new ConexionAgente();
-        conexionAgente.Conectar();
-
-        if(conexionAgente.getConnection()!= null){
-            System.out.println("Conexion agente correcta");
-            sentenciasAgente = new SentenciasAgente();
-            sentenciasAgente.insertarCabeceraDetalle(conexionAgente, fecha, costo, cliente, empleado, asiento,
-                    tipoPasajero, codigoVuelos);
-        }else
-            System.out.println("error cabecera detalle");
-        conexionAgente.Desconectar();
-    }
-
-    public List<String> asientosDisponibles(int idVuelo){
-        conexionAgente = new ConexionAgente();
-        conexionAgente.Conectar();
-        List<String> asientos = new ArrayList<>();
-
-        if(conexionAgente.getConnection() != null){
-            System.out.println("Conexion agente correcta (Asientos disponibles)");
-            sentenciasAgente = new SentenciasAgente();
-           asientos = sentenciasAgente.asientosDisponibles(conexionAgente, idVuelo);
-        }else
-            System.out.println("Error al conectar con agente (Asientos disponibles)");
-        conexionAgente.Desconectar();
-        return asientos;
-    }
-
+    /**
+     * para borrar a un cliente a este metodo se le pasa como parametro
+     * el id del cliente que se va a borrar
+     * @param id
+     */
     public void borrarCliente(int id){
         conexionAgente = new ConexionAgente();
         conexionAgente.Conectar();
@@ -140,9 +63,16 @@ public class GestionAeroLinea {
             sentenciasAgente.borrarCliente(conexionAgente, id);
         }else
             System.out.println("Error al conectar con agente (Borrado)");
-        conexionAgente.Desconectar();
     }
 
+    /**
+     * Los parametros para la actualizacion seran los siguientes:
+     * @param id
+     * @param nombre
+     * @param cedula
+     * @param direccion
+     * @param fecha
+     */
     public void actualizarCliente(int id, String nombre, String cedula, String direccion,
                                   String fecha){
         conexionAgente = new ConexionAgente();
@@ -154,9 +84,15 @@ public class GestionAeroLinea {
             sentenciasAgente.actualizarCliente(conexionAgente, id, nombre, cedula, direccion, fecha);
         }else
             System.out.println("Error al conectar con agente (Actualizacion)");
-        conexionAgente.Desconectar();
     }
 
+    /**
+     * Este metodo registra a un nuevo cliente en la base de datos y recibira los siguientes para metros
+     * @param nombre
+     * @param cedula
+     * @param direccion
+     * @param fecha
+     */
     public void crearCliente(String nombre, String cedula, String direccion, String fecha){
         conexionAgente = new ConexionAgente();
         conexionAgente.Conectar();
@@ -170,7 +106,11 @@ public class GestionAeroLinea {
         conexionAgente.Desconectar();
     }
 
-
+    /**
+     * Metodo donde se otendra una lista de clientes es un metodo dinamico
+     * donde se hara uso en el momento de comparar los poles en la ventana de login
+     * @return
+     */
     public List<ModeloCliente> clienteList(){
         List<ModeloCliente> modeloClientes = new ArrayList<>();
         conexionAgente = new ConexionAgente();
@@ -198,7 +138,11 @@ public class GestionAeroLinea {
     |
      */
 
-
+    /**
+     * Este metodo eliminara el vuelo espacificado mediante id que corresopnde al destino que
+     * se selecciono el usuario por medio de la interfaz
+     * @param vuelo
+     */
     public void eliminarVuelos(String vuelo){
         int vueId = Integer.parseInt(vuelo);
         conexionAdministrador = new ConexionAdministrador();
@@ -212,6 +156,12 @@ public class GestionAeroLinea {
             System.out.println("Error al momento de conexion con la base de datos");
     }
 
+    /**
+     * En este metodo se obtiene de la base de datos los vuelos disponible especificando
+     * el destino donde el cliente desea viajar, este metodo retornara una lista de tipo vuelos
+     * @param destino
+     * @return
+     */
     public List<ModeloVuelos> listarVuelosPorDestino(String destino) {
         List<ModeloVuelos> datos = new ArrayList<>();
         conexionAdministrador = new ConexionAdministrador();
@@ -228,6 +178,83 @@ public class GestionAeroLinea {
         return datos;
     }
 
+
+    /**
+     * Este metodo realizara la consulta de los datos que pertenecen al prpducto para conocer su respectivo kardex, para
+     * realizar la consulta se enviara como parametro el destino y retornara la informacion respectiva
+     * @param destino
+     * @return
+     */
+    public List<ModeloKardex> listarKardex(String destino) {
+
+        List<ModeloKardex> datos = new ArrayList<>();
+
+
+        /*
+        conexionAdministrador = new ConexionAdministrador();
+        conexionAdministrador.Conectar();
+
+        if(conexionAdministrador.getConnection()!= null){
+            System.out.println("Conexion administrador correcta");
+            sentenciasAdministrador = new SentenciasAdministrador();
+            datos = sentenciasAdministrador.listarVuelosPorDestino(conexionAdministrador, destino);
+        }else{
+            System.out.println("Conexion amdinistrador incorrecta");
+        }
+        conexionAdministrador.Desconectar();
+        */
+
+        ModeloKardex k=new ModeloKardex();
+        k.setFecha("12-21-1999");
+        k.setDetalle("lorena");
+        k.setE_cantidad("aiubvasdkn");
+
+        ModeloKardex k1=new ModeloKardex();
+        k1.setFecha("10-09-1200");
+        k1.setDetalle("natalia");
+        k1.setE_cantidad("KDUJFB");
+
+        ModeloKardex k2=new ModeloKardex();
+        k2.setFecha("21-02-2010");
+        k2.setDetalle("POLITA");
+        k2.setE_cantidad("EOA FHN");
+
+        ModeloKardex k3=new ModeloKardex();
+        k3.setFecha("21-12-2009");
+        k3.setDetalle("ESTEBAN");
+        k3.setE_cantidad("NNWEB234");
+
+        ModeloKardex k4=new ModeloKardex();
+        k4.setFecha("12-21-1278");
+        k4.setDetalle("PEDRO Y LORENA ");
+        k4.setE_cantidad("Q48TQHW");
+
+        datos.add(k);
+        datos.add(k1);
+        datos.add(k2);
+        datos.add(k3);
+        datos.add(k3);
+        datos.add(k4);
+
+        return datos;
+    }
+
+    /**
+     * Este metodo actualizara los vuelos esta funcionalidad es llamada desde el interfaz de menu administrador
+     * ya que este tendra permisos para realizar esta actualizacion los parametros que reciben son los siguientes
+     * parametros
+     * @param id
+     * @param capacidad
+     * @param hSalida
+     * @param hLlegada
+     * @param tipo
+     * @param costo
+     * @param paeroSalida
+     * @param paeroLlegada
+     * @param avion
+     * @param fSalida
+     * @param fLlegada
+     */
     public void actualizarVuelos(String id, String capacidad, String hSalida,
                                  String hLlegada, String tipo, String costo, String paeroSalida, String paeroLlegada,
                                  String avion, String fSalida, String fLlegada) {
@@ -246,6 +273,17 @@ public class GestionAeroLinea {
 
     }
 
+    /**
+     * Metodo donde se realizara un regitro de usuario del sistema en este metodo se puede considerar que el atributo
+     * mas importante es el rol que desempeñara el nuevo usuario los parametros seran los siguientes
+     * @param pCedula
+     * @param pNombre
+     * @param pApellido
+     * @param pPassword
+     * @param pPregunta
+     * @param pRespuesta
+     * @param pRol
+     */
     public void crearUsuario(String pCedula, String pNombre, String pApellido,
                              String pPassword, String pPregunta, String pRespuesta, String pRol){
 
@@ -264,6 +302,11 @@ public class GestionAeroLinea {
 
     }
 
+    /**
+     * Metodo que obrendra de la base de datos los empleados que existen registrados en el sistema
+     * se retornara una lista de tipo empleado
+     * @return
+     */
     public List<ModeloEmpleado> obtenerEmpleados(){
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
         conexionAdministrador = new ConexionAdministrador();
@@ -281,6 +324,12 @@ public class GestionAeroLinea {
 
         return modeloEmpleadoList;
     }
+
+    /**
+     * Metodo que retornara una lista donde se especifican los destinos que el sistema tiene registrados en su base de
+     * datos
+     * @return
+     */
     public List<String> destinos(){
 
         List<String> datos = new ArrayList<>();
@@ -302,6 +351,14 @@ public class GestionAeroLinea {
         return datos;
     }
 
+    /**
+     * Este metodo realizara una conexion con la base de datos donde se obtendar las credenciales del usuario
+     * que haya ingresado en la funcionalidad de recuperar la contraseña los parametros de entrada seran:
+     * @param cedula
+     * @param pregunta
+     * @param respuesta
+     * @return
+     */
     public List<String> recuperarPassword(String cedula, String pregunta, String respuesta){
         List<ModeloEmpleado> modeloEmpleadoList = new ArrayList<>();
         List<String> datos = new ArrayList<>();
