@@ -1,6 +1,7 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
+import modelo.ModeloTablaKardex;
 import modelo.ModeloTablaVuelos;
 import modelo.ModeloVuelos;
 
@@ -16,18 +17,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Actualizar extends JFrame implements ActionListener{
-
+    //botones
     private JButton btnBuscar, btnActualizar, btnCancelar, btnSalir;
-
+    //etiquetas
     private JLabel lblId, lblCapacidad, lblSalida, lblLlegada, lblTipo, lblCosto, lblAeroSalida, lblAeroLlegada,
     lblAvion, lblFechaSalida, lblFechaLlegada;
-
+    //campos de texto
     private JTextField txtId, txtCapacidad, txtSalida, txtLlegada, txtTipo, txtCosto,
     txtAvion, txtFechaSalida, txtFechaLlegada;
-
+    //cuadros de opciones comboBox
     private JComboBox comboAeroSalida, comboAeroLlegada;
-
+    //tabla donde se cargaran los vuelos
     private JTable tableMiniVuelos;
+    //Scroll permitira visualizar los datos que no quepan en la tabla
     private JScrollPane scrollPane;
 
     public Actualizar(){
@@ -35,6 +37,7 @@ public class Actualizar extends JFrame implements ActionListener{
     }
 
     public void ejecutar(){
+        //descripcion de la ventana
         setTitle("Actualizar vuelos");
         setSize(1100,900);
         setVisible(true);
@@ -47,7 +50,7 @@ public class Actualizar extends JFrame implements ActionListener{
     }
 
     public void init(){
-        // Inicializar variblaes
+        // Inicializar variblaes ,
         lblId = new JLabel("Id:");
         txtId = new JTextField(45);
         txtId.setEditable(false);
@@ -104,6 +107,7 @@ public class Actualizar extends JFrame implements ActionListener{
 
     public void addLayouts(){
         JPanel pnlLbl = new JPanel();
+        //en caso de agregar mas campos de texto solamente editar el numero de cols del gridLayout
         pnlLbl.setLayout(new GridLayout(11,2));
 
         pnlLbl.add(lblId);
@@ -132,12 +136,12 @@ public class Actualizar extends JFrame implements ActionListener{
         border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         border1 = BorderFactory.createCompoundBorder(border,border);
         pnlLbl.setBorder(border1);
-
+        //creacion de la tabla
         tableMiniVuelos = new JTable();
-        tableMiniVuelos.setModel(new ModeloTablaVuelos());
+        tableMiniVuelos.setModel(new ModeloTablaKardex());
         scrollPane = new JScrollPane(tableMiniVuelos);
         scrollPane.setBorder(border1);
-
+        //Panel Principal
         JPanel pnlPrincipal = new JPanel(new GridLayout(1,2,20,200));
         pnlPrincipal.add(pnlLbl);
         pnlPrincipal.add(scrollPane);
@@ -158,6 +162,11 @@ public class Actualizar extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Este metodo entra en ejecucion en antes de aparecen esta ventana la cual se
+     * conectara con la clase gestion y ralizara una consulta sobre los vuelos y los mostrara en ventana para
+     * que el usuario pueda elejir la descripcion del vuelo mediante el destino que se especifiquen
+     */
     public void buscarVuelos(){
         String seleccion;
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
@@ -180,6 +189,10 @@ public class Actualizar extends JFrame implements ActionListener{
         llenarTabla(seleccion);
     }
 
+    /**
+     * Metodo que camtura los datos que esten en ese monento en los campos de texto de la interfaz y luego hace uso del
+     * metodo de Actializar vuelos de la clase gestion aerolinea
+     */
     public void actualizarVuelos(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
         String id = txtId.getText();
@@ -200,6 +213,13 @@ public class Actualizar extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Este metodo se le pasa como parametro el destino del cual se desea conocer los vuelos disponibles hara uso del
+     * metodo listarVuelosPorDestino donde obtiene los vuelos correspondientes en una lista de tipo modelo vuelos luego
+     * esta lista de modelos es pasada como parametro a la clase modelo tabla de esa forma se llena la tabla con la
+     * informacion requerida
+     * @param seleccion
+     */
     public void llenarTabla(String seleccion){
         List<ModeloVuelos> modeloTablaVuelos;
 
@@ -223,6 +243,7 @@ public class Actualizar extends JFrame implements ActionListener{
                     int columna = 0;
                     String datos;
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna);
+                    System.out.println(datos);
 
                     datos = (String) tableMiniVuelos.getValueAt(fila, columna);
                     txtId.setText(datos);
@@ -252,6 +273,10 @@ public class Actualizar extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Este metodo hara uso otro metodo de la clase GestionAeroLinea el metodo se llama .destinos() y retorna una lista
+     * de destinos la cual va a ser cargada en el comboBox comboAeroSalida y comboAeroLlegada
+     */
     public void cargarDestinos(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
         List<String> listaDestinos = new ArrayList<>();
@@ -264,6 +289,10 @@ public class Actualizar extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * metodo que sera llamado desde un evento boton el cual vaciara la informacion ingresada en los campos de la
+     * interfaz
+     */
     public void cancelar(){
         txtFechaLlegada.setText("");
         txtFechaSalida.setText("");
@@ -275,7 +304,7 @@ public class Actualizar extends JFrame implements ActionListener{
         txtCapacidad.setText("");
         txtId.setText("");
     }
-
+    //metodo llamado desde un boton el cual regresara al menu administrador
     public void vtnAdministrador(){
         MenuAdministrador menuAdministrador = new MenuAdministrador();
         menuAdministrador.setSize(600,500);
@@ -284,6 +313,7 @@ public class Actualizar extends JFrame implements ActionListener{
     }
 
     @Override
+    //Metodo escucha de las pulsaciones del los botones de la interfaz
     public void actionPerformed(ActionEvent e) {
         String accion = e.getActionCommand();
 

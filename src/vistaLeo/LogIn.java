@@ -14,24 +14,29 @@ import java.util.List;
 
 
 public class LogIn extends JFrame implements ActionListener {
+    //paneles
     private JPanel pnlP;
     private JPanel pnlS1, pnlS2, pnlS3, pnlS3_1, pnlS3_2;
+    //campos de text0
     private JTextField txtCedula, txtPass;
+    //botones
     private JButton btnLog, btnCancelar, btnSalir, btnRecuperar;
-
-    // Labels
+    // etiquetas
     JLabel lblTitulo, lblCedula, lblPass;
-
+    //Metodo que puede ser llamado de la clase principal
     public void ejecutar(){
         init();
         pack();
     }
-
+    //contructor
     public LogIn(){}
 
-
+    /**
+     * metodo donde se determinan el tipo de letra tamaño de los botones la localizacion de los componentes que
+     * pertenecen a la  ventana
+     */
     public void init(){
-        setTitle("On Board");
+        setTitle("leo In");
         componentes();
         setLayout(null);
 
@@ -79,7 +84,7 @@ public class LogIn extends JFrame implements ActionListener {
         this.add(pnlP);
         this.setVisible(true);
     }
-
+    // en este metodo se inicializan los componentes de la vantana
     public void componentes(){
         // JPanel
         pnlP = new JPanel();
@@ -117,11 +122,17 @@ public class LogIn extends JFrame implements ActionListener {
         btnRecuperar.setActionCommand("recuperar");
         btnRecuperar.addActionListener(this);
     }
-
-
-    @Override
+    /**
+     * Metodo escucha de eventos que se accionara al monento de realizar una pulsacion internamente se filtran las
+     * acciones para diferenciar el boton que se pulso.
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
-
+        /**
+         * El el bloque de codigo que esta dentro del if se realiza las comparaciones de las credenciales ingresadas con
+         * con las credenciales que esten registradas en la base de datos luego de validar que el usuario en verdad esta
+         * registrado se procede a mostrar su respectivo menu mediante la informacion que contenga su rol
+         */
         if(e.getActionCommand().equals("login")){
             GestionAeroLinea gestionAeroLinea= new GestionAeroLinea();
             List<ModeloEmpleado> modeloEmpleados = new ArrayList<>();
@@ -153,7 +164,7 @@ public class LogIn extends JFrame implements ActionListener {
                     MenuAgente menu = new MenuAgente();
                     menu.setSize(500,500);
                     menu.ejectuar();
-                    dispose();
+                    this.setVisible(false);
                 }else if(banderaRol == false) {
                     System.out.println("Administrador");
                     MenuAdministrador menuAdministrador = new MenuAdministrador();
@@ -175,7 +186,11 @@ public class LogIn extends JFrame implements ActionListener {
                 txtCedula.requestFocus();
             }
         }
-
+        /**
+         *Esta ventana cuenta con opciones de recuperar contraseña que estara disponible en la interfaz de login en el
+         * momento que detecte una punsacion el sistema mostrara la ventana que donde tendra que llenar los campos
+         * necesarios para realizar la recuperacion
+         */
         String accion = e.getActionCommand();
         switch (accion) {
             case "recuperar":
@@ -184,14 +199,14 @@ public class LogIn extends JFrame implements ActionListener {
                 RecuperarPass recuperarPass = new RecuperarPass();
 
                 break;
-
+                //Este bloque limpia el texto de los campos
             case "cancelar":
                 System.out.println("Cancelar");
                 txtCedula.setText("");
                 txtPass.setText("");
                 txtCedula.requestFocus();
                 break;
-
+                //termina el programa
             case "salir":
                 System.exit(0);
                 break;

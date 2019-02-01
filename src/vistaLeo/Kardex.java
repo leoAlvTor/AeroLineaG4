@@ -1,9 +1,9 @@
 package vistaLeo;
 
 import controlador.GestionAeroLinea;
+import modelo.ModeloKardex;
 import modelo.ModeloTablaKardex;
-import modelo.ModeloTablaVuelos;
-import modelo.ModeloVuelos;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,26 +12,23 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuscarVuelo extends JFrame implements ActionListener {
+
+public class Kardex extends JFrame implements ActionListener {
+    //tabla
+    private JTable tablaKardex;
+    private String seleccion;
     //botones
     private JButton btnRegresar, btnOtroVuelo;
-    //tablas
-    private JTable tablaVuelos;
-    //String
-    private String seleccion;
-    //boolean rol
-    private boolean rol;        // En caso de que sea administrador |true| o agente |false|
-
-    public BuscarVuelo(){
+    //rol de verificacion
+    private boolean rol; // En caso de que sea administrador |true| o agente |false|
+    //constructor
+    public Kardex(){
         ejecutar();
     }
-
-    /**
-     * metodo que es llamado desde el constructor de la clase el cual determina las caracteristicas de la vetana
-     */
+    //metodo que sera llamado desde el constructor
     public void ejecutar(){
         setLayout(null);
-        setTitle("Listado de vuelos por destino");
+        setTitle("Kardex Producto");
         setVisible(true);
         setSize(1100,650);
 
@@ -45,19 +42,18 @@ public class BuscarVuelo extends JFrame implements ActionListener {
 
         init();
 
-        mostrarVuelos();
+        mostrarInfoKardex();
 
     }
 
     /**
-     * Inicion de las variables entre ellas encontramos a los botones junto con las dimensiones, tablas, Scroll
-     * que forman parte de la ventana
+     * Inicializacion de todos los componentes que pertenecen a esta clase
      */
     public void init(){
-        tablaVuelos = new JTable();
-        tablaVuelos.setModel(new ModeloTablaVuelos());
-
-        JScrollPane jScrollPane = new JScrollPane(tablaVuelos);
+        tablaKardex = new JTable();
+        tablaKardex.setModel(new ModeloTablaKardex());
+        //la ventana sera añadida a un Scroll pane en caso de que los datos sobre pasen la tabla
+        JScrollPane jScrollPane = new JScrollPane(tablaKardex);
         jScrollPane.setSize(1080, 500);
         jScrollPane.setLocation(10, 10);
 
@@ -81,24 +77,20 @@ public class BuscarVuelo extends JFrame implements ActionListener {
     }
 
     /**
-     * Metodo que se encargara de cardar los datos necesarios en la tabla de vuelos, el metodo consiste en que se
-     * conecta a la base de datos para obtener la lista de vuelos mas actualizada que pueda estar en ese momento recibe
-     * como parametro el destino
+     * Cuando este metodo sea llamado se pasara como parametro el destino donde la consulta que esta alojada en la base
+     * de datos realizara los calculos correspondientes de el kardex
      * @param destino
      */
     public void llenarTabla(String destino){
-        List<ModeloVuelos> modeloTablaVuelos;
-
+        List<ModeloKardex> modeloTablaKardex;
+        //conexion con la base de datos mediante la clase gestion aerolinea
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
-        modeloTablaVuelos = gestionAeroLinea.listarVuelosPorDestino(destino);
-
-        tablaVuelos.setModel(new ModeloTablaVuelos(modeloTablaVuelos));
+        modeloTablaKardex = gestionAeroLinea.listarKardex(destino);//ATENTO AQUI PUEDE IR PARAMETROS
+        //se pasa la lista de objetos de tipo modelo kardex a las respactivas tablas
+        tablaKardex.setModel(new ModeloTablaKardex(modeloTablaKardex));
     }
 
-    /**
-     * El metodo regresara al menu que le corresponda segun desde donde lo esten llamando puede si es llamado desde el
-     * menu agente de ventas regresara a este del mismo modo con el menu de administrador
-     */
+    //metodo encargado de regresar al menu adminstrador
     public void regresarMenu(){
         dispose();
         MenuAdministrador menuAdministrador = new MenuAdministrador();
@@ -107,24 +99,23 @@ public class BuscarVuelo extends JFrame implements ActionListener {
     }
 
     /**
-     * Este metodo se conectara a la base de datos para carga los  vuelos disponibles en funcion al destino, los datos
-     * seran adicionados a un comboBox
+     * obtener informacion de la base de datos
      */
-    public void mostrarVuelos(){
+    public void mostrarInfoKardex(){
         GestionAeroLinea gestionAeroLinea = new GestionAeroLinea();
         List<String> lista= new ArrayList<>();
+        //Extraemos la informacion del kardex del la base de datos  en funcion de los destinos
         lista = gestionAeroLinea.destinos();
-
 
         String[] destinos = new String[lista.size()];
 
         for (int i = 0; i < lista.size(); i++) {
             destinos[i] = lista.get(i);
         }
-
+        //cargamos los destinos que tienen sus respctivos registros en la entidad kerdex
         seleccion = (String) JOptionPane.showInputDialog(this,
-                "Cual es el destino deseado?",
-                "Destinos disponibles",
+                "Seleccione el destino para conocer su kardex?",
+                "Ingrese el destino",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 destinos,
@@ -133,7 +124,6 @@ public class BuscarVuelo extends JFrame implements ActionListener {
         llenarTabla(seleccion);
 
     }
-
     /**
      * Metodo escucha de eventos que se accionara al monento de realizar una pulsacion internamente se filtran las
      * acciones para diferenciar el boton que se pulso.
@@ -141,7 +131,7 @@ public class BuscarVuelo extends JFrame implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("mostrar"))
-            mostrarVuelos();
+            mostrarInfoKardex();
         else if(e.getActionCommand().equals("salir"))
             regresarMenu();
     }
