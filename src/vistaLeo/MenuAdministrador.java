@@ -5,17 +5,27 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Esta clase esta programada en su mayoria etiquetas, las que comienzan con lbl contendran una imagen
+ * las que comienzen con txt mostraran la descripcion ala que hace referencia la imagen
+ */
 
 public class MenuAdministrador extends JFrame implements MouseListener {
+    //etiquetas con imagen
     private JLabel lblBuscar, lblActualizar, lblEliminar, lblSalir, lblRegistrar;
+    //etiquetas con texto
     private JLabel txtBuscar, txtActualizar, txtEliminar, txtSalir, txtRegistrar;
-
+    //metodo que puede ser llamado desde otra clase
     public void ejecutar(){
         componentes();
         init();
         repaint();
     }
 
+    /**
+     * Metodo donde determinan los componentes que son parte de esta ventana internamente se establece el color de
+     * fondo el titulo de la ventana la ubicacion de los lbl con imagen en conjunto con las dimensiones
+     */
     public void init(){
         getContentPane().setBackground(Color.WHITE);
         setVisible(true);
@@ -64,6 +74,10 @@ public class MenuAdministrador extends JFrame implements MouseListener {
 
     }
 
+    /**
+     * En este metodo se inicializan los respectivos componentes y se agregan las ubicaciones path de las imagenes,
+     * tambien se agrega una funcionalidad que estara en escucha cuando se pulse click sobre la imajen
+     */
     public void componentes(){
         lblRegistrar = new JLabel();
         lblRegistrar.setIcon(new ImageIcon(this.getClass().getResource("Imagenes/registrar.png")));
@@ -101,17 +115,26 @@ public class MenuAdministrador extends JFrame implements MouseListener {
         txtSalir.setToolTipText("Regresar a la ventana de LogIn");
     }
 
+    /**
+     * metodo llamado desde el bloque de escucha de eventos, cuando este entre en ejecucion el sistema mostrara en
+     * pantalla la interfaz de crear cuenta
+     */
     public void llamarRegistro(){
         dispose();
         CrearCuenta  crearCuenta = new CrearCuenta();
     }
 
+    /**
+     * Cuando el metodo sea llamado el sistema mostrara en pantalla la interfaz que se encarga de la busqueda de vuelos
+     */
     public void llamarBuscarVuelos(){
         dispose();
-        BuscarVuelo buscarVuelo = new BuscarVuelo(true);
+        BuscarVuelo buscarVuelo = new BuscarVuelo();
     }
-
+    //En el momento que el metodo se llamado el sistema pasara del la ventana que se encuentra actualmente a la ventana
+    //de login
     public void logOut(){
+        System.out.println();
         LogIn logIn = new LogIn();
         logIn.init();
         logIn.setSize(300,350);
@@ -119,14 +142,15 @@ public class MenuAdministrador extends JFrame implements MouseListener {
         dispose();
     }
 
-    @Override
+    /**
+     * metodo encarcado en el escucha de los click que el usuario pulsara dependiendo la opcion que se elija
+     * @param e
+     */
     public void mouseClicked(MouseEvent e) {
         Object event = e.getSource();
         JLabel label = (JLabel) event;
         Actualizar actualizar;
         Eliminar eliminar;
-
-
         if(label == lblBuscar)
             llamarBuscarVuelos();
         else if(label == lblActualizar) {

@@ -6,14 +6,13 @@ import modelo.ModeloEmpleado;
 import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
     public static void main(String[] leo){
-     //   CrearCliente c= new CrearCliente();
-
-       // FormaPago formaPago = new FormaPago();
 
         //Eliminar eliminar = new Eliminar();
 /*
@@ -34,7 +33,10 @@ public class Main {
         menu.setSize(500,500);
         menu.ejectuar();
 */
-       PreFactura preFactura = new PreFactura();
+        //PreFactura preFactura = new PreFactura();
+
+        //Kardex vent=new Kardex();
+        VtnCRUDVuelos v=new VtnCRUDVuelos();
 /*
 
         //VuelosVendidos vuelosVendidos = new VuelosVendidos();
@@ -42,9 +44,13 @@ public class Main {
        // FormaPago formaPago= new FormaPago();
 
         //BuscarVuelo buscarVuelo = new BuscarVuelo();
+
+            Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        int a = calendar.get(Calendar.YEAR);
+        int b = calendar.get(Calendar.MONTH);
+        int c = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(a + " mes: " + b + " dia: "+ c);
 */
-
-
-
     }
 }
